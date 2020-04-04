@@ -1,7 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:music_player/play.dart';
+import 'package:flutter/services.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(App());
+
+class App extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+      ),
+      child: MyApp(),
+    );
+  }
+}
 
 class MyApp extends StatelessWidget {
   @override
@@ -41,11 +54,99 @@ class _MyHomePageState extends State<MyHomePage> {
                 ],
               ),
             ),
-            child: Center(
-              child: Container(
-                height: constraints.maxHeight,
-                width: constraints.maxWidth * 0.194,
-                child: PlayPause(),
+            child: SafeArea(
+              child: Center(
+                child: Column(
+                  children: <Widget>[
+                    Expanded(
+                      flex: 7,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          Container(
+                            width: constraints.maxWidth * 0.121,
+                            child: PlayPause(),
+                          ),
+                          Container(
+                            width: constraints.maxWidth * 0.121,
+                          ),
+                          Container(
+                            width: constraints.maxWidth * 0.121,
+                          ),
+                          Container(
+                            width: constraints.maxWidth * 0.121,
+                          ),
+                          Container(
+                            width: constraints.maxWidth * 0.121,
+                            child: PlayPause(),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      flex: 19,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          Container(
+                            width: constraints.maxWidth * 0.73,
+                            child: PlayPause(),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      flex: 7,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          Container(
+                            width: constraints.maxWidth * 0.194,
+                          ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      flex: 7,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          Container(
+                            width: constraints.maxWidth * 0.194,
+                          ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      flex: 10,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          Container(
+                            width: constraints.maxWidth * 0.121,
+                            child: PlayPause(),
+                          ),
+                          Container(
+                            width: constraints.maxWidth * 0.121,
+                            child: PlayPause(),
+                          ),
+                          Container(
+                            width: constraints.maxWidth * 0.194,
+                            child: PlayPause(),
+                          ),
+                          Container(
+                            width: constraints.maxWidth * 0.121,
+                            child: PlayPause(),
+                          ),
+                          Container(
+                            width: constraints.maxWidth * 0.121,
+                            child: PlayPause(),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           );
