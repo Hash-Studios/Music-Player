@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// * Main PlayPause Stateless Widget
 class PlayPause extends StatelessWidget {
   PlayPause();
 
@@ -10,13 +11,13 @@ class PlayPause extends StatelessWidget {
         color: Colors.transparent,
         shape: BoxShape.circle,
         boxShadow: [
-          const BoxShadow(
+          const BoxShadow(                          // * Background Shadow top left
             color: Color.fromARGB(71, 111, 124, 142),
             offset: const Offset(-10.0, -10.0),
             spreadRadius: 0.0,
             blurRadius: 30.0,
           ),
-          const BoxShadow(
+          const BoxShadow(                          // * Background Shadow bottom right
             color: Color.fromARGB(114, 0, 0, 0),
             offset: const Offset(10.0, 10.0),
             spreadRadius: 0.0,
@@ -24,7 +25,7 @@ class PlayPause extends StatelessWidget {
           ),
         ],
       ),
-      padding: EdgeInsets.all(1),
+      padding: EdgeInsets.all(1),                          // * Container and BG padding
       child: CustomPaint(
         painter: PlayPausePainterBG(),
         child: Container(
@@ -32,13 +33,13 @@ class PlayPause extends StatelessWidget {
             color: Colors.transparent,
             shape: BoxShape.circle,
             boxShadow: [
-              const BoxShadow(
+              const BoxShadow(                          // * Foreground Shadow top left
                 color: Color.fromARGB(255, 229, 95, 33),
                 offset: const Offset(-3.0, -3.0),
                 spreadRadius: -3.0,
                 blurRadius: 2.0,
               ),
-              const BoxShadow(
+              const BoxShadow(                          // * Foreground Shadow bottom right
                 color: Color.fromARGB(250, 212, 51, 0),
                 offset: const Offset(3.0, 3.0),
                 spreadRadius: -3.0,
@@ -53,7 +54,7 @@ class PlayPause extends StatelessWidget {
                 color: Colors.transparent,
                 shape: BoxShape.circle,
                 boxShadow: [
-                  const BoxShadow(
+                  const BoxShadow(                          // * Inner Drop Shadow
                     color: Color.fromARGB(255, 255, 89, 24),
                     offset: const Offset(5.0, 5.0),
                     spreadRadius: -20.0,
@@ -69,11 +70,12 @@ class PlayPause extends StatelessWidget {
   }
 }
 
+// * PlayPause BG Custom Painter
 class PlayPausePainterBG extends CustomPainter {
   PlayPausePainterBG();
 
   @override
-  void paint(Canvas canvas, Size size) {
+  void paint(Canvas canvas, Size size) {                        // * paint function
     canvas.drawColor(Colors.transparent, BlendMode.screen);
     final paint = Paint();
 
@@ -83,16 +85,17 @@ class PlayPausePainterBG extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(PlayPausePainterBG oldDelegate) {
+  bool shouldRepaint(PlayPausePainterBG oldDelegate) {                        // * shouldRepaint function
     return false;
   }
 }
 
+// * PlayPause FG Custom Painter
 class PlayPausePainterFG extends CustomPainter {
   PlayPausePainterFG();
 
   @override
-  void paint(Canvas canvas, Size size) {
+  void paint(Canvas canvas, Size size) {                        // * paint function
     canvas.drawColor(Colors.transparent, BlendMode.screen);
     final paint = Paint();
 
@@ -102,7 +105,7 @@ class PlayPausePainterFG extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(PlayPausePainterFG oldDelegate) {
+  bool shouldRepaint(PlayPausePainterFG oldDelegate) {                        // * shouldRepaint function
     return false;
   }
 }

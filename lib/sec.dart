@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// * Main SecButton Stateless Widget
 class SecButton extends StatelessWidget {
   SecButton();
 
@@ -10,13 +11,13 @@ class SecButton extends StatelessWidget {
         color: Colors.transparent,
         shape: BoxShape.circle,
         boxShadow: [
-          const BoxShadow(
+          const BoxShadow(                          // * Background Shadow top left
             color: Color.fromARGB(71, 111, 124, 142),
             offset: const Offset(-10.0, -10.0),
             spreadRadius: 0.0,
             blurRadius: 30.0,
           ),
-          const BoxShadow(
+          const BoxShadow(                         // * Background Shadow bottom right
             color: Color.fromARGB(114, 0, 0, 0),
             offset: const Offset(10.0, 10.0),
             spreadRadius: 0.0,
@@ -24,7 +25,7 @@ class SecButton extends StatelessWidget {
           ),
         ],
       ),
-      padding: EdgeInsets.all(1),
+      padding: EdgeInsets.all(1),                          // * Container and BG padding
       child: CustomPaint(
         painter: SecButtonPainterBG(),
         child: Container(
@@ -32,13 +33,13 @@ class SecButton extends StatelessWidget {
             color: Colors.transparent,
             shape: BoxShape.circle,
             boxShadow: [
-              const BoxShadow(
+              const BoxShadow(                          // * Foreground Shadow top left
                 color: Color.fromARGB(255, 35, 35, 35),
                 offset: const Offset(-3.0, -3.0),
                 spreadRadius: -3.0,
                 blurRadius: 2.0,
               ),
-              const BoxShadow(
+              const BoxShadow(                          // * Foreground Shadow bottom right
                 color: Color.fromARGB(66, 11, 11, 11),
                 offset: const Offset(3.0, 3.0),
                 spreadRadius: -3.0,
@@ -53,7 +54,7 @@ class SecButton extends StatelessWidget {
                 color: Colors.transparent,
                 shape: BoxShape.circle,
                 boxShadow: [
-                  const BoxShadow(
+                  const BoxShadow(                          // * Inner Drop Shadow
                     color: Color.fromARGB(255, 35, 35, 35),
                     offset: const Offset(7.0, 7.0),
                     spreadRadius: -13.0,
@@ -69,6 +70,7 @@ class SecButton extends StatelessWidget {
   }
 }
 
+// * SecButton BG Custom Painter
 class SecButtonPainterBG extends CustomPainter {
   SecButtonPainterBG();
 
@@ -88,6 +90,7 @@ class SecButtonPainterBG extends CustomPainter {
   }
 }
 
+// * SecButton FG Custom Painter
 class SecButtonPainterFG extends CustomPainter {
   SecButtonPainterFG();
 

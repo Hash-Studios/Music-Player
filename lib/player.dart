@@ -5,6 +5,7 @@ import 'package:music_player/albumart.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+// * Main PlayerPage Stateful Widget
 class PlayerPage extends StatefulWidget {
   PlayerPage({Key key, this.title}) : super(key: key);
 
@@ -14,14 +15,15 @@ class PlayerPage extends StatefulWidget {
   _PlayerPageState createState() => _PlayerPageState();
 }
 
+// * PlayerPage Initial State
 class _PlayerPageState extends State<PlayerPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
-          return Container(
-            decoration: BoxDecoration(
+          return Container(                                     // * Root Container
+            decoration: BoxDecoration(                          // * Background Gradient
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
@@ -31,16 +33,20 @@ class _PlayerPageState extends State<PlayerPage> {
                 ],
               ),
             ),
+          // * Main SafeArea
             child: SafeArea(
               child: Center(
+               // * Main Column which contains all UI elements
                 child: Column(
                   children: <Widget>[
-                    Expanded(
+                    // * This column contains five expanded widgets
+                     // * which all contain row widgets
+                    Expanded(                                                   // * 1st row
                       flex: 7,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
-                          Container(
+                          Container(                                                   // * Back Button
                             width: constraints.maxWidth * 0.121,
                             child: Stack(
                               children: <Widget>[
@@ -54,7 +60,7 @@ class _PlayerPageState extends State<PlayerPage> {
                                 ),
                                 Center(
                                   child: Container(
-                                    height: 70,
+                                    height: 70,                                 // TODO fix button size over different screen sizes
                                     width: 70,
                                     child: FloatingActionButton(
                                       foregroundColor: Colors.transparent,
@@ -73,10 +79,10 @@ class _PlayerPageState extends State<PlayerPage> {
                               ],
                             ),
                           ),
-                          Container(
+                          Container(                                                   // * Empty Container
                             width: constraints.maxWidth * 0.121,
                           ),
-                          Container(
+                          Container(                                                   // * 'PLAYING NOW' Text
                               child: Text(
                             'PLAYING NOW',
                             style: TextStyle(
@@ -86,10 +92,10 @@ class _PlayerPageState extends State<PlayerPage> {
                               fontSize: 12,
                             ),
                           )),
-                          Container(
+                          Container(                                                   // * Empty Container
                             width: constraints.maxWidth * 0.121,
                           ),
-                          Container(
+                          Container(                                                   // * Settings Button
                             width: constraints.maxWidth * 0.121,
                             child: Stack(
                               children: <Widget>[
@@ -125,24 +131,24 @@ class _PlayerPageState extends State<PlayerPage> {
                         ],
                       ),
                     ),
-                    Expanded(
+                    Expanded(                                                   // * 2nd row
                       flex: 19,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
-                          Container(
+                          Container(                                                   // * Album Art
                             width: constraints.maxWidth * 0.73,
                             child: AlbumArt(),
                           ),
                         ],
                       ),
                     ),
-                    Expanded(
+                    Expanded(                                                   // * 3rd row
                       flex: 7,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
-                          Container(
+                          Container(                                                   // * Song Name and Artist Name
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: <Widget>[
@@ -168,8 +174,8 @@ class _PlayerPageState extends State<PlayerPage> {
                         ],
                       ),
                     ),
-                    Expanded(
-                      flex: 7,
+                    Expanded(                                                   // * 4th row
+                      flex: 7,                                                   // TODO Add seekbar widget
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
@@ -179,12 +185,12 @@ class _PlayerPageState extends State<PlayerPage> {
                         ],
                       ),
                     ),
-                    Expanded(
+                    Expanded(                                                   // * 5th row
                       flex: 10,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
-                          Container(
+                          Container(                                                   // * Repeat Button
                             width: constraints.maxWidth * 0.121,
                             child: Stack(
                               children: <Widget>[
@@ -217,7 +223,7 @@ class _PlayerPageState extends State<PlayerPage> {
                               ],
                             ),
                           ),
-                          Container(
+                          Container(                                                   // * Backward Button
                             width: constraints.maxWidth * 0.121,
                             child: Stack(
                               children: <Widget>[
@@ -250,7 +256,7 @@ class _PlayerPageState extends State<PlayerPage> {
                               ],
                             ),
                           ),
-                          Container(
+                          Container(                                                   // * Play/Pause Button
                             width: constraints.maxWidth * 0.194,
                             child: Stack(
                               children: <Widget>[
@@ -283,7 +289,7 @@ class _PlayerPageState extends State<PlayerPage> {
                               ],
                             ),
                           ),
-                          Container(
+                          Container(                                                   // * Forward Button
                             width: constraints.maxWidth * 0.121,
                             child: Stack(
                               children: <Widget>[
@@ -316,7 +322,7 @@ class _PlayerPageState extends State<PlayerPage> {
                               ],
                             ),
                           ),
-                          Container(
+                          Container(                                                   // * Shuffle Button
                             width: constraints.maxWidth * 0.121,
                             child: Stack(
                               children: <Widget>[

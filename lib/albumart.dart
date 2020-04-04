@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// * Main AlbumArt Stateless Widget
 class AlbumArt extends StatelessWidget {
   AlbumArt();
 
@@ -10,19 +11,19 @@ class AlbumArt extends StatelessWidget {
         color: Colors.transparent,
         shape: BoxShape.circle,
         boxShadow: [
-          const BoxShadow(
+          const BoxShadow(                          // * Background Shadow top left light
             color: Color.fromARGB(77, 116, 130, 151),
             offset: const Offset(-10.0, -10.0),
             spreadRadius: 0.0,
             blurRadius: 50.0,
           ),
-          const BoxShadow(
+          const BoxShadow(                          // * Background Shadow bottom right
             color: Color.fromARGB(114, 0, 0, 0),
             offset: const Offset(10.0, 10.0),
             spreadRadius: 0.0,
             blurRadius: 40.0,
           ),
-          const BoxShadow(
+          const BoxShadow(                          // * Background Shadow top left dark
             color: Color.fromARGB(64, 0, 0, 0),
             offset: const Offset(-3.0, -3.0),
             spreadRadius: 0.0,
@@ -30,7 +31,7 @@ class AlbumArt extends StatelessWidget {
           ),
         ],
       ),
-      padding: EdgeInsets.all(1),
+      padding: EdgeInsets.all(1),                          // * Container and BG padding
       child: CustomPaint(
         painter: AlbumArtPainterBG(),
         child: Container(
@@ -38,13 +39,13 @@ class AlbumArt extends StatelessWidget {
             color: Colors.transparent,
             shape: BoxShape.circle,
             boxShadow: [
-              const BoxShadow(
+              const BoxShadow(                          // * Foreground Shadow top left
                 color: Color.fromARGB(51, 20, 20, 20),
                 offset: const Offset(-5.0, -2.0),
                 spreadRadius: -10.0,
                 blurRadius: 5.0,
               ),
-              const BoxShadow(
+              const BoxShadow(                          // * Foreground Shadow bottom right
                 color: Color.fromARGB(64, 104, 104, 104),
                 offset: const Offset(5.0, 2.0),
                 spreadRadius: -10.0,
@@ -54,11 +55,11 @@ class AlbumArt extends StatelessWidget {
           ),
           child: CustomPaint(
             painter: AlbumArtPainterFG(),
-            child: Container(
+            child: Container(         // TODO fix height and width of the image to scale
               height: 330,
               width: 330,
-              padding: EdgeInsets.all(11),
-              child: CircleAvatar(
+              padding: EdgeInsets.all(11), // TODO fix this padding to work with diff screen sizes
+              child: CircleAvatar(                          // * Album Art Image
                 backgroundColor: Color.fromARGB(51, 20, 20, 20),
                 backgroundImage: NetworkImage('https://n.sinaimg.cn/sinakd10116/260/w530h530/20200306/04ac-iqmtvwv3179270.png'),
               ),
@@ -70,6 +71,7 @@ class AlbumArt extends StatelessWidget {
   }
 }
 
+// * AlbumArt BG Custom Painter
 class AlbumArtPainterBG extends CustomPainter {
   AlbumArtPainterBG();
 
@@ -89,6 +91,7 @@ class AlbumArtPainterBG extends CustomPainter {
   }
 }
 
+// * AlbumArt FG Custom Painter
 class AlbumArtPainterFG extends CustomPainter {
   AlbumArtPainterFG();
 
