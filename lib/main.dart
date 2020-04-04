@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:music_player/play.dart';
+import 'package:music_player/sec.dart';
+import 'package:music_player/albumart.dart';
 import 'package:flutter/services.dart';
 
 void main() => runApp(App());
@@ -65,7 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         children: <Widget>[
                           Container(
                             width: constraints.maxWidth * 0.121,
-                            child: PlayPause(),
+                            child: SecButton(),
                           ),
                           Container(
                             width: constraints.maxWidth * 0.121,
@@ -78,7 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           ),
                           Container(
                             width: constraints.maxWidth * 0.121,
-                            child: PlayPause(),
+                            child: SecButton(),
                           ),
                         ],
                       ),
@@ -90,7 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         children: <Widget>[
                           Container(
                             width: constraints.maxWidth * 0.73,
-                            child: PlayPause(),
+                            child: AlbumArt(),
                           ),
                         ],
                       ),
@@ -124,11 +126,11 @@ class _MyHomePageState extends State<MyHomePage> {
                         children: <Widget>[
                           Container(
                             width: constraints.maxWidth * 0.121,
-                            child: PlayPause(),
+                            child: SecButton(),
                           ),
                           Container(
                             width: constraints.maxWidth * 0.121,
-                            child: PlayPause(),
+                            child: SecButton(),
                           ),
                           Container(
                             width: constraints.maxWidth * 0.194,
@@ -136,11 +138,11 @@ class _MyHomePageState extends State<MyHomePage> {
                           ),
                           Container(
                             width: constraints.maxWidth * 0.121,
-                            child: PlayPause(),
+                            child: SecButton(),
                           ),
                           Container(
                             width: constraints.maxWidth * 0.121,
-                            child: PlayPause(),
+                            child: SecButton(),
                           ),
                         ],
                       ),

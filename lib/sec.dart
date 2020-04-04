@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class PlayPause extends StatelessWidget {
-  PlayPause();
+class SecButton extends StatelessWidget {
+  SecButton();
 
   @override
   Widget build(BuildContext context) {
@@ -26,20 +26,20 @@ class PlayPause extends StatelessWidget {
       ),
       padding: EdgeInsets.all(1),
       child: CustomPaint(
-        painter: PlayPausePainterBG(),
+        painter: SecButtonPainterBG(),
         child: Container(
           decoration: BoxDecoration(
             color: Colors.transparent,
             shape: BoxShape.circle,
             boxShadow: [
               const BoxShadow(
-                color: Color.fromARGB(255, 229, 95, 33),
+                color: Color.fromARGB(255, 35, 35, 35),
                 offset: const Offset(-3.0, -3.0),
                 spreadRadius: -3.0,
                 blurRadius: 2.0,
               ),
               const BoxShadow(
-                color: Color.fromARGB(250, 212, 51, 0),
+                color: Color.fromARGB(66, 11, 11, 11),
                 offset: const Offset(3.0, 3.0),
                 spreadRadius: -3.0,
                 blurRadius: 2.0,
@@ -47,17 +47,17 @@ class PlayPause extends StatelessWidget {
             ],
           ),
           child: CustomPaint(
-            painter: PlayPausePainterFG(),
+            painter: SecButtonPainterFG(),
             child: Container(
               decoration: BoxDecoration(
                 color: Colors.transparent,
                 shape: BoxShape.circle,
                 boxShadow: [
                   const BoxShadow(
-                    color: Color.fromARGB(255, 255, 89, 24),
-                    offset: const Offset(5.0, 5.0),
-                    spreadRadius: -20.0,
-                    blurRadius: 20.0,
+                    color: Color.fromARGB(255, 35, 35, 35),
+                    offset: const Offset(7.0, 7.0),
+                    spreadRadius: -13.0,
+                    blurRadius: 13.0,
                   ),
                 ],
               ),
@@ -69,40 +69,40 @@ class PlayPause extends StatelessWidget {
   }
 }
 
-class PlayPausePainterBG extends CustomPainter {
-  PlayPausePainterBG();
+class SecButtonPainterBG extends CustomPainter {
+  SecButtonPainterBG();
 
   @override
   void paint(Canvas canvas, Size size) {
     canvas.drawColor(Colors.transparent, BlendMode.screen);
     final paint = Paint();
 
-    paint.color = Color.fromARGB(255, 221, 70, 10);
+    paint.color = Color.fromARGB(255, 31, 35, 39);
     var center = Offset(size.width / 2, size.height / 2);
     canvas.drawCircle(center, size.width / 2, paint);
   }
 
   @override
-  bool shouldRepaint(PlayPausePainterBG oldDelegate) {
+  bool shouldRepaint(SecButtonPainterBG oldDelegate) {
     return false;
   }
 }
 
-class PlayPausePainterFG extends CustomPainter {
-  PlayPausePainterFG();
+class SecButtonPainterFG extends CustomPainter {
+  SecButtonPainterFG();
 
   @override
   void paint(Canvas canvas, Size size) {
     canvas.drawColor(Colors.transparent, BlendMode.screen);
     final paint = Paint();
 
-    paint.color = Color.fromARGB(255, 215, 70, 21);
+    paint.color = Color.fromARGB(77, 87, 87, 87);
     var center = Offset(size.width / 2, size.height / 2);
-    canvas.drawCircle(center, size.width * 0.468, paint);
+    canvas.drawCircle(center, size.width * 0.466, paint);
   }
 
   @override
-  bool shouldRepaint(PlayPausePainterFG oldDelegate) {
+  bool shouldRepaint(SecButtonPainterFG oldDelegate) {
     return false;
   }
 }
