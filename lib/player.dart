@@ -4,6 +4,8 @@ import 'package:music_player/sec.dart';
 import 'package:music_player/albumart.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flare_flutter/flare_actor.dart';
+import 'package:flare_flutter/flare_controls.dart';
 
 // * Main PlayerPage Stateful Widget
 class PlayerPage extends StatefulWidget {
@@ -17,13 +19,17 @@ class PlayerPage extends StatefulWidget {
 
 // * PlayerPage Initial State
 class _PlayerPageState extends State<PlayerPage> {
+  final FlareControls flareControls = FlareControls();
+  bool isLiked = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
-          return Container(                                     // * Root Container
-            decoration: BoxDecoration(                          // * Background Gradient
+          return Container(
+            // * Root Container
+            decoration: BoxDecoration(
+              // * Background Gradient
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
@@ -33,20 +39,22 @@ class _PlayerPageState extends State<PlayerPage> {
                 ],
               ),
             ),
-          // * Main SafeArea
+            // * Main SafeArea
             child: SafeArea(
               child: Center(
-               // * Main Column which contains all UI elements
+                // * Main Column which contains all UI elements
                 child: Column(
                   children: <Widget>[
                     // * This column contains five expanded widgets
-                     // * which all contain row widgets
-                    Expanded(                                                   // * 1st row
+                    // * which all contain row widgets
+                    Expanded(
+                      // * 1st row
                       flex: 7,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
-                          Container(                                                   // * Back Button
+                          Container(
+                            // * Back Button
                             width: constraints.maxWidth * 0.121,
                             child: Stack(
                               children: <Widget>[
@@ -60,7 +68,8 @@ class _PlayerPageState extends State<PlayerPage> {
                                 ),
                                 Center(
                                   child: Container(
-                                    height: 70,                                 // TODO fix button size over different screen sizes
+                                    height:
+                                        70, // TODO fix button size over different screen sizes
                                     width: 70,
                                     child: FloatingActionButton(
                                       foregroundColor: Colors.transparent,
@@ -79,10 +88,12 @@ class _PlayerPageState extends State<PlayerPage> {
                               ],
                             ),
                           ),
-                          Container(                                                   // * Empty Container
+                          Container(
+                            // * Empty Container
                             width: constraints.maxWidth * 0.121,
                           ),
-                          Container(                                                   // * 'PLAYING NOW' Text
+                          Container(
+                              // * 'PLAYING NOW' Text
                               child: Text(
                             'PLAYING NOW',
                             style: TextStyle(
@@ -92,10 +103,12 @@ class _PlayerPageState extends State<PlayerPage> {
                               fontSize: 12,
                             ),
                           )),
-                          Container(                                                   // * Empty Container
+                          Container(
+                            // * Empty Container
                             width: constraints.maxWidth * 0.121,
                           ),
-                          Container(                                                   // * Settings Button
+                          Container(
+                            // * Settings Button
                             width: constraints.maxWidth * 0.121,
                             child: Stack(
                               children: <Widget>[
@@ -131,24 +144,55 @@ class _PlayerPageState extends State<PlayerPage> {
                         ],
                       ),
                     ),
-                    Expanded(                                                   // * 2nd row
+                    Expanded(
+                      // * 2nd row
                       flex: 19,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
-                          Container(                                                   // * Album Art
-                            width: constraints.maxWidth * 0.73,
-                            child: AlbumArt(),
+                          GestureDetector(
+                            onDoubleTap: () {
+                              setState(() {
+                                isLiked = !isLiked;
+                              });
+                              flareControls.play("like");
+                              HapticFeedback.vibrate();
+                            },
+                            child: Stack(
+                              children: <Widget>[
+                                Container(
+                                  // * Album Art
+                                  width: constraints.maxWidth * 0.73,
+                                  child: AlbumArt(),
+                                ),
+                                Container(
+                                  width: constraints.maxWidth * 0.73,
+                                  child: Center(
+                                    child: SizedBox(
+                                      width: 100,
+                                      height: 100,
+                                      child: FlareActor(
+                                        'assets/like.flr',
+                                        controller: flareControls,
+                                        animation: 'idle',
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
                         ],
                       ),
                     ),
-                    Expanded(                                                   // * 3rd row
+                    Expanded(
+                      // * 3rd row
                       flex: 7,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
-                          Container(                                                   // * Song Name and Artist Name
+                          Container(
+                            // * Song Name and Artist Name
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: <Widget>[
@@ -174,8 +218,9 @@ class _PlayerPageState extends State<PlayerPage> {
                         ],
                       ),
                     ),
-                    Expanded(                                                   // * 4th row
-                      flex: 7,                                                   // TODO Add seekbar widget
+                    Expanded(
+                      // * 4th row
+                      flex: 7, // TODO Add seekbar widget
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
@@ -185,12 +230,14 @@ class _PlayerPageState extends State<PlayerPage> {
                         ],
                       ),
                     ),
-                    Expanded(                                                   // * 5th row
+                    Expanded(
+                      // * 5th row
                       flex: 10,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
-                          Container(                                                   // * Repeat Button
+                          Container(
+                            // * Repeat Button
                             width: constraints.maxWidth * 0.121,
                             child: Stack(
                               children: <Widget>[
@@ -223,7 +270,8 @@ class _PlayerPageState extends State<PlayerPage> {
                               ],
                             ),
                           ),
-                          Container(                                                   // * Backward Button
+                          Container(
+                            // * Backward Button
                             width: constraints.maxWidth * 0.121,
                             child: Stack(
                               children: <Widget>[
@@ -256,7 +304,8 @@ class _PlayerPageState extends State<PlayerPage> {
                               ],
                             ),
                           ),
-                          Container(                                                   // * Play/Pause Button
+                          Container(
+                            // * Play/Pause Button
                             width: constraints.maxWidth * 0.194,
                             child: Stack(
                               children: <Widget>[
@@ -289,7 +338,8 @@ class _PlayerPageState extends State<PlayerPage> {
                               ],
                             ),
                           ),
-                          Container(                                                   // * Forward Button
+                          Container(
+                            // * Forward Button
                             width: constraints.maxWidth * 0.121,
                             child: Stack(
                               children: <Widget>[
@@ -322,7 +372,8 @@ class _PlayerPageState extends State<PlayerPage> {
                               ],
                             ),
                           ),
-                          Container(                                                   // * Shuffle Button
+                          Container(
+                            // * Shuffle Button
                             width: constraints.maxWidth * 0.121,
                             child: Stack(
                               children: <Widget>[
