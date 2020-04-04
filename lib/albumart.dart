@@ -61,7 +61,7 @@ class AlbumArt extends StatelessWidget {
               padding: EdgeInsets.all(11), // TODO fix this padding to work with diff screen sizes
               child: CircleAvatar(                          // * Album Art Image
                 backgroundColor: Color.fromARGB(51, 20, 20, 20),
-                backgroundImage: NetworkImage('https://n.sinaimg.cn/sinakd10116/260/w530h530/20200306/04ac-iqmtvwv3179270.png'),
+                backgroundImage: AssetImage('assets/album_art.png'),
               ),
             ),
           ),
