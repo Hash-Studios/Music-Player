@@ -73,8 +73,15 @@ class _MyHomePageState extends State<MyHomePage> {
                             width: constraints.maxWidth * 0.121,
                           ),
                           Container(
-                            width: constraints.maxWidth * 0.121,
-                          ),
+                              child: Text(
+                            'PLAYING NOW',
+                            style: TextStyle(
+                              fontFamily: 'Proxima Nova',
+                              color: Color.fromARGB(255, 117, 119, 122),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12,
+                            ),
+                          )),
                           Container(
                             width: constraints.maxWidth * 0.121,
                           ),
@@ -103,7 +110,27 @@ class _MyHomePageState extends State<MyHomePage> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
                           Container(
-                            width: constraints.maxWidth * 0.194,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: <Widget>[
+                                Text(
+                                  'End of Time',
+                                  style: TextStyle(
+                                    fontFamily: 'Proxima Nova',
+                                    color: Color.fromARGB(255, 167, 168, 170),
+                                    fontSize: 36,
+                                  ),
+                                ),
+                                Text(
+                                  'K-391, Alan Walker & Ahrix',
+                                  style: TextStyle(
+                                    fontFamily: 'Proxima Nova',
+                                    color: Color.fromARGB(255, 117, 119, 122),
+                                    fontSize: 18,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ),
