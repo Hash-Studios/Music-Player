@@ -3,6 +3,7 @@ import 'package:music_player/play.dart';
 import 'package:music_player/sec.dart';
 import 'package:music_player/albumart.dart';
 import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 void main() => runApp(App());
 
@@ -67,7 +68,36 @@ class _MyHomePageState extends State<MyHomePage> {
                         children: <Widget>[
                           Container(
                             width: constraints.maxWidth * 0.121,
-                            child: SecButton(),
+                            child: Stack(
+                              children: <Widget>[
+                                SecButton(),
+                                Center(
+                                  child: Container(
+                                    height: 70,
+                                    width: 70,
+                                    child: FloatingActionButton(
+                                      foregroundColor: Colors.transparent,
+                                      backgroundColor: Colors.transparent,
+                                      elevation: 0,
+                                      hoverElevation: 0,
+                                      hoverColor: Colors.transparent,
+                                      highlightElevation: 0,
+                                      disabledElevation: 0,
+                                      onPressed: () {
+                                        HapticFeedback.vibrate();
+                                      },
+                                    ),
+                                  ),
+                                ),
+                                Center(
+                                  child: Icon(
+                                    Icons.arrow_back,
+                                    size: 18,
+                                    color: Colors.white38,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                           Container(
                             width: constraints.maxWidth * 0.121,
@@ -87,7 +117,36 @@ class _MyHomePageState extends State<MyHomePage> {
                           ),
                           Container(
                             width: constraints.maxWidth * 0.121,
-                            child: SecButton(),
+                            child: Stack(
+                              children: <Widget>[
+                                SecButton(),
+                                Center(
+                                  child: Container(
+                                    height: 70,
+                                    width: 70,
+                                    child: FloatingActionButton(
+                                      foregroundColor: Colors.transparent,
+                                      backgroundColor: Colors.transparent,
+                                      elevation: 0,
+                                      hoverElevation: 0,
+                                      hoverColor: Colors.transparent,
+                                      highlightElevation: 0,
+                                      disabledElevation: 0,
+                                      onPressed: () {
+                                        HapticFeedback.vibrate();
+                                      },
+                                    ),
+                                  ),
+                                ),
+                                Center(
+                                  child: Icon(
+                                    Icons.more_vert,
+                                    size: 18,
+                                    color: Colors.white38,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ),
@@ -153,23 +212,168 @@ class _MyHomePageState extends State<MyHomePage> {
                         children: <Widget>[
                           Container(
                             width: constraints.maxWidth * 0.121,
-                            child: SecButton(),
+                            child: Stack(
+                              children: <Widget>[
+                                SecButton(),
+                                Center(
+                                  child: Container(
+                                    height: 70,
+                                    width: 70,
+                                    child: FloatingActionButton(
+                                      foregroundColor: Colors.transparent,
+                                      backgroundColor: Colors.transparent,
+                                      elevation: 0,
+                                      hoverElevation: 0,
+                                      hoverColor: Colors.transparent,
+                                      highlightElevation: 0,
+                                      disabledElevation: 0,
+                                      onPressed: () {
+                                        HapticFeedback.vibrate();
+                                      },
+                                    ),
+                                  ),
+                                ),
+                                Center(
+                                  child: Icon(
+                                    Icons.repeat,
+                                    size: 18,
+                                    color: Colors.white38,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                           Container(
                             width: constraints.maxWidth * 0.121,
-                            child: SecButton(),
+                            child: Stack(
+                              children: <Widget>[
+                                SecButton(),
+                                Center(
+                                  child: Container(
+                                    height: 70,
+                                    width: 70,
+                                    child: FloatingActionButton(
+                                      foregroundColor: Colors.transparent,
+                                      backgroundColor: Colors.transparent,
+                                      elevation: 0,
+                                      hoverElevation: 0,
+                                      hoverColor: Colors.transparent,
+                                      highlightElevation: 0,
+                                      disabledElevation: 0,
+                                      onPressed: () {
+                                        HapticFeedback.vibrate();
+                                      },
+                                    ),
+                                  ),
+                                ),
+                                Center(
+                                  child: FaIcon(
+                                    FontAwesomeIcons.backward,
+                                    size: 18,
+                                    color: Colors.white38,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                           Container(
                             width: constraints.maxWidth * 0.194,
-                            child: PlayPause(),
+                            child: Stack(
+                              children: <Widget>[
+                                PlayPause(),
+                                Center(
+                                  child: Container(
+                                    height: 90,
+                                    width: 90,
+                                    child: FloatingActionButton(
+                                      foregroundColor: Colors.transparent,
+                                      backgroundColor: Colors.transparent,
+                                      elevation: 0,
+                                      hoverElevation: 0,
+                                      hoverColor: Colors.transparent,
+                                      highlightElevation: 0,
+                                      disabledElevation: 0,
+                                      onPressed: () {
+                                        HapticFeedback.vibrate();
+                                      },
+                                    ),
+                                  ),
+                                ),
+                                Center(
+                                  child: FaIcon(
+                                    FontAwesomeIcons.play,
+                                    size: 18,
+                                    color: Colors.white70,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                           Container(
                             width: constraints.maxWidth * 0.121,
-                            child: SecButton(),
+                            child: Stack(
+                              children: <Widget>[
+                                SecButton(),
+                                Center(
+                                  child: Container(
+                                    height: 70,
+                                    width: 70,
+                                    child: FloatingActionButton(
+                                      foregroundColor: Colors.transparent,
+                                      backgroundColor: Colors.transparent,
+                                      elevation: 0,
+                                      hoverElevation: 0,
+                                      hoverColor: Colors.transparent,
+                                      highlightElevation: 0,
+                                      disabledElevation: 0,
+                                      onPressed: () {
+                                        HapticFeedback.vibrate();
+                                      },
+                                    ),
+                                  ),
+                                ),
+                                Center(
+                                  child: FaIcon(
+                                    FontAwesomeIcons.forward,
+                                    size: 18,
+                                    color: Colors.white38,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                           Container(
                             width: constraints.maxWidth * 0.121,
-                            child: SecButton(),
+                            child: Stack(
+                              children: <Widget>[
+                                SecButton(),
+                                Center(
+                                  child: Container(
+                                    height: 70,
+                                    width: 70,
+                                    child: FloatingActionButton(
+                                      foregroundColor: Colors.transparent,
+                                      backgroundColor: Colors.transparent,
+                                      elevation: 0,
+                                      hoverElevation: 0,
+                                      hoverColor: Colors.transparent,
+                                      highlightElevation: 0,
+                                      disabledElevation: 0,
+                                      onPressed: () {
+                                        HapticFeedback.vibrate();
+                                      },
+                                    ),
+                                  ),
+                                ),
+                                Center(
+                                  child: Icon(
+                                    Icons.shuffle,
+                                    size: 18,
+                                    color: Colors.white38,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ),

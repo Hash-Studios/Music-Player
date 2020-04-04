@@ -59,7 +59,7 @@ class AlbumArt extends StatelessWidget {
               width: 330,
               padding: EdgeInsets.all(11),
               child: CircleAvatar(
-                backgroundColor: Colors.deepPurple,
+                backgroundColor: Color.fromARGB(51, 20, 20, 20),
                 backgroundImage: NetworkImage('https://n.sinaimg.cn/sinakd10116/260/w530h530/20200306/04ac-iqmtvwv3179270.png'),
               ),
             ),
