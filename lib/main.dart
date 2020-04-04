@@ -28,16 +28,29 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: EdgeInsets.all(30.0),
-        child: Center(
-          child: Container(
-            height: 100,
-            width: 100,
-            child: PlayPause(),
+      body: LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+          return Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Color.fromARGB(247, 38, 40, 43),
+                  Color.fromARGB(255, 35, 37, 39)
+                ],
+              ),
             ),
-        ),
-        ),
+            child: Center(
+              child: Container(
+                height: constraints.maxHeight,
+                width: constraints.maxWidth * 0.194,
+                child: PlayPause(),
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
 }
