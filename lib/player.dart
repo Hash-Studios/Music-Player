@@ -644,8 +644,9 @@ class _PlayerPageState extends State<PlayerPage> {
             padding: EdgeInsets.symmetric(horizontal: 5),
             child: SliderTheme(
                 data: SliderTheme.of(context).copyWith(
-                  trackShape: RetroSliderTrackShape(),
+                  trackShape: RetroSliderTrackShape(sliderPos: _slider),
                   trackHeight: 5,
+                  overlayColor: Colors.transparent,
                   activeTrackColor: Color.fromARGB(255, 234, 93, 29),
                   inactiveTrackColor: Color.fromARGB(255, 170, 141, 30),
                   thumbShape: RetroSliderThumbShape(thumbRadius: 8),
