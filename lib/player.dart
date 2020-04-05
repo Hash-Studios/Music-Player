@@ -21,6 +21,21 @@ class PlayerPage extends StatefulWidget {
 class _PlayerPageState extends State<PlayerPage> {
   final FlareControls flareControls = FlareControls();
   bool isLiked = false;
+  bool isPlayed = false;
+  String shuffleMode = 'off'; // on, off
+  String repeatMode = 'off'; // on, off, one
+  final likeSnackBar = SnackBar(
+    content: Text('Yay! Added to favourites!'),
+    backgroundColor: Colors.white24,
+    duration: Duration(milliseconds: 500),
+    elevation: 10,
+  );
+  final dislikeSnackBar = SnackBar(
+    content: Text('Removed from favourites!'),
+    backgroundColor: Colors.white24,
+    duration: Duration(milliseconds: 500),
+    elevation: 10,
+  );
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,6 +89,8 @@ class _PlayerPageState extends State<PlayerPage> {
                                     child: FloatingActionButton(
                                       foregroundColor: Colors.transparent,
                                       backgroundColor: Colors.transparent,
+                                      splashColor: Color.fromARGB(50, 0, 0, 0),
+                                      focusColor: Color.fromARGB(50, 0, 0, 0),
                                       elevation: 0,
                                       hoverElevation: 0,
                                       hoverColor: Colors.transparent,
@@ -127,6 +144,8 @@ class _PlayerPageState extends State<PlayerPage> {
                                     child: FloatingActionButton(
                                       foregroundColor: Colors.transparent,
                                       backgroundColor: Colors.transparent,
+                                      splashColor: Color.fromARGB(50, 0, 0, 0),
+                                      focusColor: Color.fromARGB(50, 0, 0, 0),
                                       elevation: 0,
                                       hoverElevation: 0,
                                       hoverColor: Colors.transparent,
@@ -151,35 +170,50 @@ class _PlayerPageState extends State<PlayerPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
                           GestureDetector(
+                            onTap: () {
+                              HapticFeedback.vibrate();
+                              setState(
+                                () {
+                                  isPlayed = !isPlayed;
+                                },
+                              );
+                            },
                             onDoubleTap: () {
                               setState(() {
                                 isLiked = !isLiked;
                               });
                               flareControls.play("like");
                               HapticFeedback.vibrate();
+                              isLiked
+                                  ? Scaffold.of(context)
+                                      .showSnackBar(dislikeSnackBar)
+                                  : Scaffold.of(context)
+                                      .showSnackBar(likeSnackBar);
                             },
-                            child: Stack(
-                              children: <Widget>[
-                                Container(
-                                  // * Album Art
-                                  width: constraints.maxWidth * 0.73,
-                                  child: AlbumArt(),
-                                ),
-                                Container(
-                                  width: constraints.maxWidth * 0.73,
-                                  child: Center(
-                                    child: SizedBox(
-                                      width: 100,
-                                      height: 100,
-                                      child: FlareActor(
-                                        'assets/like.flr',
-                                        controller: flareControls,
-                                        animation: 'idle',
+                            child: ClipOval(
+                              child: Stack(
+                                children: <Widget>[
+                                  Container(
+                                    // * Album Art
+                                    width: constraints.maxWidth * 0.73,
+                                    child: AlbumArt(),
+                                  ),
+                                  Container(
+                                    width: constraints.maxWidth * 0.73,
+                                    child: Center(
+                                      child: SizedBox(
+                                        width: 100,
+                                        height: 100,
+                                        child: FlareActor(
+                                          'assets/like.flr',
+                                          controller: flareControls,
+                                          animation: 'idle',
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                )
-                              ],
+                                  )
+                                ],
+                              ),
                             ),
                           ),
                         ],
@@ -244,9 +278,13 @@ class _PlayerPageState extends State<PlayerPage> {
                                 SecButton(),
                                 Center(
                                   child: Icon(
-                                    Icons.repeat,
+                                    repeatMode != 'one'
+                                        ? Icons.repeat
+                                        : Icons.repeat_one,
                                     size: 18,
-                                    color: Colors.white38,
+                                    color: repeatMode != 'off'
+                                        ? Colors.deepOrange[400]
+                                        : Colors.white38,
                                   ),
                                 ),
                                 Center(
@@ -256,6 +294,8 @@ class _PlayerPageState extends State<PlayerPage> {
                                     child: FloatingActionButton(
                                       foregroundColor: Colors.transparent,
                                       backgroundColor: Colors.transparent,
+                                      splashColor: Color.fromARGB(50, 0, 0, 0),
+                                      focusColor: Color.fromARGB(50, 0, 0, 0),
                                       elevation: 0,
                                       hoverElevation: 0,
                                       hoverColor: Colors.transparent,
@@ -263,6 +303,13 @@ class _PlayerPageState extends State<PlayerPage> {
                                       disabledElevation: 0,
                                       onPressed: () {
                                         HapticFeedback.vibrate();
+                                        setState(() {
+                                          repeatMode == 'on'
+                                              ? repeatMode = 'one'
+                                              : repeatMode == 'one'
+                                                  ? repeatMode = 'off'
+                                                  : repeatMode = 'on';
+                                        });
                                       },
                                     ),
                                   ),
@@ -290,6 +337,8 @@ class _PlayerPageState extends State<PlayerPage> {
                                     child: FloatingActionButton(
                                       foregroundColor: Colors.transparent,
                                       backgroundColor: Colors.transparent,
+                                      splashColor: Color.fromARGB(50, 0, 0, 0),
+                                      focusColor: Color.fromARGB(50, 0, 0, 0),
                                       elevation: 0,
                                       hoverElevation: 0,
                                       hoverColor: Colors.transparent,
@@ -312,7 +361,9 @@ class _PlayerPageState extends State<PlayerPage> {
                                 PlayPause(),
                                 Center(
                                   child: FaIcon(
-                                    FontAwesomeIcons.play,
+                                    isPlayed
+                                        ? FontAwesomeIcons.pause
+                                        : FontAwesomeIcons.play,
                                     size: 18,
                                     color: Colors.white70,
                                   ),
@@ -331,6 +382,9 @@ class _PlayerPageState extends State<PlayerPage> {
                                       disabledElevation: 0,
                                       onPressed: () {
                                         HapticFeedback.vibrate();
+                                        setState(() {
+                                          isPlayed = !isPlayed;
+                                        });
                                       },
                                     ),
                                   ),
@@ -358,6 +412,8 @@ class _PlayerPageState extends State<PlayerPage> {
                                     child: FloatingActionButton(
                                       foregroundColor: Colors.transparent,
                                       backgroundColor: Colors.transparent,
+                                      splashColor: Color.fromARGB(50, 0, 0, 0),
+                                      focusColor: Color.fromARGB(50, 0, 0, 0),
                                       elevation: 0,
                                       hoverElevation: 0,
                                       hoverColor: Colors.transparent,
@@ -382,7 +438,9 @@ class _PlayerPageState extends State<PlayerPage> {
                                   child: Icon(
                                     Icons.shuffle,
                                     size: 18,
-                                    color: Colors.white38,
+                                    color: shuffleMode == 'on'
+                                        ? Colors.deepOrange[400]
+                                        : Colors.white38,
                                   ),
                                 ),
                                 Center(
@@ -392,6 +450,8 @@ class _PlayerPageState extends State<PlayerPage> {
                                     child: FloatingActionButton(
                                       foregroundColor: Colors.transparent,
                                       backgroundColor: Colors.transparent,
+                                      splashColor: Color.fromARGB(50, 0, 0, 0),
+                                      focusColor: Color.fromARGB(50, 0, 0, 0),
                                       elevation: 0,
                                       hoverElevation: 0,
                                       hoverColor: Colors.transparent,
@@ -399,6 +459,11 @@ class _PlayerPageState extends State<PlayerPage> {
                                       disabledElevation: 0,
                                       onPressed: () {
                                         HapticFeedback.vibrate();
+                                        setState(() {
+                                          shuffleMode == 'on'
+                                              ? shuffleMode = 'off'
+                                              : shuffleMode = 'on';
+                                        });
                                       },
                                     ),
                                   ),
