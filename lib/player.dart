@@ -10,6 +10,8 @@ import 'package:flare_flutter/flare_actor.dart';
 import 'package:flare_flutter/flare_controls.dart';
 import 'package:audio_manager/audio_manager.dart';
 import 'package:path_provider/path_provider.dart';
+import './slider_thumb.dart';
+import './slider_track.dart';
 
 // * Main PlayerPage Stateful Widget
 class PlayerPage extends StatefulWidget {
@@ -642,18 +644,11 @@ class _PlayerPageState extends State<PlayerPage> {
             padding: EdgeInsets.symmetric(horizontal: 5),
             child: SliderTheme(
                 data: SliderTheme.of(context).copyWith(
-                  trackHeight: 2,
-                  thumbColor: Colors.deepOrange,
-                  overlayColor: Colors.deepOrange,
-                  thumbShape: RoundSliderThumbShape(
-                    disabledThumbRadius: 5,
-                    enabledThumbRadius: 9,
-                  ),
-                  overlayShape: RoundSliderOverlayShape(
-                    overlayRadius: 10,
-                  ),
-                  activeTrackColor: Colors.deepOrange,
-                  inactiveTrackColor: Colors.black45,
+                  trackShape: RetroSliderTrackShape(),
+                  trackHeight: 5,
+                  activeTrackColor: Color.fromARGB(255, 234, 93, 29),
+                  inactiveTrackColor: Color.fromARGB(255, 170, 141, 30),
+                  thumbShape: RetroSliderThumbShape(thumbRadius: 8),
                 ),
                 child: Slider(
                   value: _slider ?? 0,
