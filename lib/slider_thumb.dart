@@ -73,13 +73,13 @@ class RetroSliderThumbShape extends SliderComponentShape {
       ..style = PaintingStyle.fill;
 
     final borderPaint = Paint()
-      ..color = Colors.black
+      ..color = Color.fromARGB(255,39,43,48)
       ..strokeWidth = 10
       ..style = PaintingStyle.stroke;
 
     final shadowPaint = Paint()
       ..style = PaintingStyle.stroke
-      ..color = Colors.black
+      ..color = Color.fromARGB(114, 0, 0, 0)
       ..strokeWidth = 12
       ..maskFilter = MaskFilter.blur(BlurStyle.normal, 12);
 
@@ -95,10 +95,10 @@ class RetroSliderThumbShape extends SliderComponentShape {
       ..shader = gradient.createShader(rect2);
 
 
-    canvas.drawCircle(Offset(rect.right + 1, rect.bottom), thumbRadius + 1, shadowPaint);//white shadow
-    canvas.drawCircle(Offset(rect.left - 1, rect.top), thumbRadius + 1, shadowPaint3);//black shadow
+    canvas.drawCircle(Offset(rect.right + 1, rect.bottom), thumbRadius + 1, shadowPaint);// white shadow
+    // canvas.drawCircle(Offset(rect.left - 1, rect.top), thumbRadius + 1, shadowPaint3);//black shadow
     canvas.drawCircle(center, thumbRadius + 7.8, fillPaint);//original black fill
-    canvas.drawCircle(Offset(rect.right-6, rect.bottom-5), thumbRadius-2 , shadowPaint2);//Orange shadow
+    canvas.drawCircle(Offset(rect.right-6, rect.bottom-5), thumbRadius-1 , shadowPaint2);//Orange shadow
     canvas.drawCircle(center, thumbRadius + 3, borderPaint);//final black stroke
 
     // canvas.drawShadow(path, color, elevation, transparentOccluder)

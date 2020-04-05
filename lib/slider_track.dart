@@ -47,7 +47,7 @@ class RetroSliderTrackShape extends SliderTrackShape {
     final double trackLeft = offset.dx + thumbWidth / 2;
     final double trackTop =
         offset.dy + (parentBox.size.height - trackHeight) / 2;
-    final double trackWidth = sliderPos * 320;
+    final double trackWidth = sliderPos * 315;
     return Rect.fromLTWH(trackLeft, trackTop, trackWidth, trackHeight);
   }
 
@@ -84,11 +84,11 @@ class RetroSliderTrackShape extends SliderTrackShape {
     );
 
     final Paint fillPaint = Paint()
-      ..color = Colors.blueGrey
+      ..color = Color.fromARGB(255, 32,36,40)
       ..style = PaintingStyle.fill;
 
     final Paint borderPaint = Paint()
-      ..color = Colors.black
+      ..color = Color.fromARGB(255,39,43,48)
       ..strokeWidth = 1.0
       ..style = PaintingStyle.stroke;
 
@@ -97,8 +97,8 @@ class RetroSliderTrackShape extends SliderTrackShape {
       ..lineTo(trackRect.right, trackRect.top)
       ..arcTo(
           Rect.fromPoints(
-            Offset(trackRect.right + 7, trackRect.top),
-            Offset(trackRect.right - 7, trackRect.bottom),
+            Offset(trackRect.right + 5, trackRect.top),
+            Offset(trackRect.right - 5, trackRect.bottom),
           ),
           -pi / 2,
           pi,
@@ -106,8 +106,28 @@ class RetroSliderTrackShape extends SliderTrackShape {
       ..lineTo(trackRect.left, trackRect.bottom)
       ..arcTo(
           Rect.fromPoints(
-            Offset(trackRect.left + 7, trackRect.top),
-            Offset(trackRect.left - 7, trackRect.bottom),
+            Offset(trackRect.left + 5, trackRect.top),
+            Offset(trackRect.left - 5, trackRect.bottom),
+          ),
+          -pi * 3 / 2,
+          pi,
+          false);
+    final pathSegment3 = Path()
+      ..moveTo(trackRect.left, trackRect.top-8)
+      ..lineTo(trackRect.right, trackRect.top-8)
+      ..arcTo(
+          Rect.fromPoints(
+            Offset(trackRect.right + 5, trackRect.top-8),
+            Offset(trackRect.right - 5, trackRect.bottom-8),
+          ),
+          -pi / 2,
+          pi,
+          false)
+      ..lineTo(trackRect.left, trackRect.bottom-8)
+      ..arcTo(
+          Rect.fromPoints(
+            Offset(trackRect.left + 5, trackRect.top-8),
+            Offset(trackRect.left - 5, trackRect.bottom-8),
           ),
           -pi * 3 / 2,
           pi,
@@ -118,8 +138,8 @@ class RetroSliderTrackShape extends SliderTrackShape {
       ..lineTo(trackRect2.right, trackRect2.top)
       ..arcTo(
           Rect.fromPoints(
-            Offset(trackRect2.right + 7, trackRect2.top),
-            Offset(trackRect2.right - 7, trackRect2.bottom),
+            Offset(trackRect2.right + 5, trackRect2.top),
+            Offset(trackRect2.right - 5, trackRect2.bottom),
           ),
           -pi / 2,
           pi,
@@ -127,8 +147,8 @@ class RetroSliderTrackShape extends SliderTrackShape {
       ..lineTo(trackRect2.left, trackRect2.bottom)
       ..arcTo(
           Rect.fromPoints(
-            Offset(trackRect2.left + 7, trackRect2.top),
-            Offset(trackRect2.left - 7, trackRect2.bottom),
+            Offset(trackRect2.left + 5, trackRect2.top),
+            Offset(trackRect2.left - 5, trackRect2.bottom),
           ),
           -pi * 3 / 2,
           pi,
@@ -147,10 +167,12 @@ class RetroSliderTrackShape extends SliderTrackShape {
       ..shader = gradient.createShader(trackRect);
 
 
+    context.canvas.drawShadow(pathSegment, Color.fromARGB(255,111,114,117), 4, false);
     context.canvas.drawPath(pathSegment, fillPaint);
     context.canvas.drawPath(pathSegment2, progressPaint);
-    context.canvas.drawPath(pathSegment, borderPaint);
-    context.canvas.drawShadow(pathSegment, Colors.black, 4, false);
+    context.canvas.drawShadow(pathSegment3, Color.fromARGB(255,22,25,29), 5, false);
+    // context.canvas.drawPath(pathSegment, borderPaint);
+    
   }
 
   @override
