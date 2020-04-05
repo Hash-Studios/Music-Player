@@ -31,7 +31,7 @@ class AlbumArt extends StatelessWidget {
           ),
         ],
       ),
-      padding: EdgeInsets.all(1),                          // * Container and BG padding
+      padding: EdgeInsets.all(0),                          // * Container and BG padding
       child: CustomPaint(
         painter: AlbumArtPainterBG(),
         child: Container(
