@@ -12,7 +12,7 @@ class AlbumArt extends StatelessWidget {
         shape: BoxShape.circle,
         boxShadow: [
           const BoxShadow(                          // * Background Shadow top left light
-            color: Color.fromARGB(77, 116, 130, 151),
+            color: Color.fromARGB(97, 116, 130, 151),
             offset: const Offset(-10.0, -10.0),
             spreadRadius: 0.0,
             blurRadius: 50.0,
@@ -55,15 +55,6 @@ class AlbumArt extends StatelessWidget {
           ),
           child: CustomPaint(
             painter: AlbumArtPainterFG(),
-            child: Container(         // TODO fix height and width of the image to scale
-              height: 330,
-              width: 330,
-              padding: EdgeInsets.all(11), // TODO fix this padding to work with diff screen sizes
-              child: CircleAvatar(                          // * Album Art Image
-                backgroundColor: Color.fromARGB(51, 20, 20, 20),
-                backgroundImage: AssetImage('assets/album_art.png'),
-              ),
-            ),
           ),
         ),
       ),
@@ -99,7 +90,7 @@ class AlbumArtPainterFG extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     canvas.drawColor(Colors.transparent, BlendMode.screen);
     final paint = Paint();
-
+    
     paint.color = Color.fromARGB(77, 87, 87, 87);
     var center = Offset(size.width / 2, size.height / 2);
     canvas.drawCircle(center, size.width * 0.466, paint);

@@ -27,7 +27,6 @@ class PlayerPage extends StatefulWidget {
 class _PlayerPageState extends State<PlayerPage> {
   final FlareControls flareControls = FlareControls();
   bool isLiked = false;
-  bool isPlayed = false;
   String shuffleMode = 'off'; // on, off
   String repeatMode = 'off'; // on, off, one
   final likeSnackBar = SnackBar(
@@ -59,6 +58,12 @@ class _PlayerPageState extends State<PlayerPage> {
       "desc": "K-391, Alan Walker & Ahrix",
       "url": "assets/audio.mp3",
       "coverUrl": "assets/album_art.png"
+    },
+    {
+      "title": "SOS",
+      "desc": "Avicii",
+      "url": "assets/audio2.mp3",
+      "coverUrl": "assets/album_art2.png"
     },
   ];
 
@@ -202,7 +207,7 @@ class _PlayerPageState extends State<PlayerPage> {
                     // * which all contain row widgets
                     Expanded(
                       // * 1st row
-                      flex: 7,
+                      flex: 5,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
@@ -255,7 +260,7 @@ class _PlayerPageState extends State<PlayerPage> {
                               fontFamily: 'Proxima Nova',
                               color: Color.fromARGB(255, 117, 119, 122),
                               fontWeight: FontWeight.bold,
-                              fontSize: 12,
+                              fontSize: 10,
                             ),
                           )),
                           Container(
@@ -303,60 +308,77 @@ class _PlayerPageState extends State<PlayerPage> {
                     ),
                     Expanded(
                       // * 2nd row
-                      flex: 23,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          GestureDetector(
-                            onTap: () async {
-                              bool playing =
-                                  await AudioManager.instance.playOrPause();
-                              print("await -- $playing");
-                              HapticFeedback.vibrate();
-                              setState(
-                                () {
-                                  isPlayed = !isPlayed;
-                                },
-                              );
-                            },
-                            onDoubleTap: () {
-                              setState(() {
-                                isLiked = !isLiked;
-                              });
-                              flareControls.play("like");
-                              HapticFeedback.vibrate();
-                              isLiked
-                                  ? Scaffold.of(context)
-                                      .showSnackBar(dislikeSnackBar)
-                                  : Scaffold.of(context)
-                                      .showSnackBar(likeSnackBar);
-                            },
-                            child: Stack(
-                              children: <Widget>[
-                                Container(
-                                  // * Album Art
-                                  width: constraints.maxWidth * 0.83,
-                                  height: constraints.maxWidth * 0.83,
-                                  child: AlbumArt(),
-                                ),
-                                Container(
-                                  width: constraints.maxWidth * 0.83,
-                                  child: Center(
-                                    child: SizedBox(
-                                      width: 100,
-                                      height: 100,
-                                      child: FlareActor(
-                                        'assets/like.flr',
-                                        controller: flareControls,
-                                        animation: 'idle',
-                                      ),
-                                    ),
-                                  ),
-                                )
-                              ],
+                      flex: 25,
+                      child: Center(
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: <Widget>[
+                            Container(
+                              // * Album Art
+                              width: constraints.maxWidth * 0.85,
+                              height: constraints.maxWidth * 0.85,
+                              child: AlbumArt(),
                             ),
-                          ),
-                        ],
+                            SizedBox(
+                              // // TODO fix height and width of the image to scale
+                              height: constraints.maxWidth * 0.8,
+                              width: constraints.maxWidth * 0.8,
+                              // // TODO fix this padding to work with diff screen sizes
+                              child: CircleAvatar(
+                                // * Album Art Image
+                                backgroundColor: Color.fromARGB(51, 20, 20, 20),
+                                backgroundImage: AssetImage(
+                                    AudioManager.instance.info.coverUrl),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 100,
+                              height: 100,
+                              child: FlareActor(
+                                'assets/like.flr',
+                                controller: flareControls,
+                                animation: 'idle',
+                              ),
+                            ),
+                            ClipOval(
+                              child: GestureDetector(
+                                onTap: () async {
+                                  bool playing =
+                                      await AudioManager.instance.playOrPause();
+                                  print("await -- $playing");
+                                  HapticFeedback.vibrate();
+                                },
+                                onDoubleTap: () {
+                                  setState(() {
+                                    isLiked = !isLiked;
+                                  });
+                                  flareControls.play("like");
+                                  HapticFeedback.vibrate();
+                                  isLiked
+                                      ? Scaffold.of(context)
+                                          .showSnackBar(dislikeSnackBar)
+                                      : Scaffold.of(context)
+                                          .showSnackBar(likeSnackBar);
+                                },
+                                onPanUpdate: (details) {
+                                  if (details.delta.dx > 100) {
+                                    HapticFeedback.vibrate();
+                                    AudioManager.instance.previous();
+                                  }
+                                  if (details.delta.dx < 100) {
+                                    HapticFeedback.vibrate();
+                                    AudioManager.instance.next();
+                                  }
+                                },
+                                child: SizedBox(
+                                  width: constraints.maxWidth * 0.8,
+                                  height: constraints.maxWidth * 0.8,
+                                  child: Text(''),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                     Expanded(
@@ -365,42 +387,41 @@ class _PlayerPageState extends State<PlayerPage> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
-                          Container(
-                            // * Song Name and Artist Name
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: <Widget>[
-                                Text(''),
-                                Text(
-                                  'End of Time',
-                                  style: TextStyle(
-                                    fontFamily: 'Proxima Nova',
-                                    color: Color.fromARGB(255, 167, 168, 170),
-                                    fontSize: 36,
-                                  ),
+                          // * Song Name and Artist Name
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              Text(''),
+                              Text(
+                                AudioManager.instance.info.title,
+                                style: TextStyle(
+                                  fontFamily: 'Proxima Nova',
+                                  color: Color.fromARGB(255, 167, 168, 170),
+                                  fontSize: 30,
                                 ),
-                                Text(
-                                  'K-391, Alan Walker & Ahrix',
-                                  style: TextStyle(
-                                    fontFamily: 'Proxima Nova',
-                                    color: Color.fromARGB(255, 117, 119, 122),
-                                    fontSize: 18,
-                                  ),
+                              ),
+                              Text(
+                                AudioManager.instance.info.desc,
+                                style: TextStyle(
+                                  fontFamily: 'Proxima Nova',
+                                  color: Color.fromARGB(255, 117, 119, 122),
+                                  fontSize: 12,
                                 ),
-                              ],
-                            ),
+                              ),
+                              Text(''),
+                            ],
                           ),
                         ],
                       ),
                     ),
                     Expanded(
                       // * 4th row
-                      flex: 7, // TODO Add seekbar widget
+                      flex: 7, // FIXME fix seekbar widget thumb
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
                           Container(
-                            width: 400,
+                            width: constraints.maxWidth * 0.9,
                             child: songProgress(context),
                           ),
                         ],
@@ -488,6 +509,7 @@ class _PlayerPageState extends State<PlayerPage> {
                                       disabledElevation: 0,
                                       onPressed: () {
                                         HapticFeedback.vibrate();
+                                        AudioManager.instance.previous();
                                       },
                                     ),
                                   ),
@@ -503,7 +525,7 @@ class _PlayerPageState extends State<PlayerPage> {
                                 PlayPause(),
                                 Center(
                                   child: FaIcon(
-                                    isPlayed
+                                    isPlaying
                                         ? FontAwesomeIcons.pause
                                         : FontAwesomeIcons.play,
                                     size: 18,
@@ -528,9 +550,6 @@ class _PlayerPageState extends State<PlayerPage> {
                                             .playOrPause();
                                         print("await -- $playing");
                                         HapticFeedback.vibrate();
-                                        setState(() {
-                                          isPlayed = !isPlayed;
-                                        });
                                       },
                                     ),
                                   ),
@@ -567,6 +586,7 @@ class _PlayerPageState extends State<PlayerPage> {
                                       disabledElevation: 0,
                                       onPressed: () {
                                         HapticFeedback.vibrate();
+                                        AudioManager.instance.next();
                                       },
                                     ),
                                   ),
@@ -620,6 +640,7 @@ class _PlayerPageState extends State<PlayerPage> {
                         ],
                       ),
                     ),
+                    // * 6th row
                     Expanded(
                       flex: 3,
                       child: Text(''),
@@ -635,46 +656,59 @@ class _PlayerPageState extends State<PlayerPage> {
   }
 
   Widget songProgress(BuildContext context) {
-    var style = TextStyle(color: Colors.deepOrange);
-    return Row(
+    var style = TextStyle(color: Colors.deepOrange, fontFamily: 'Proxima Nova');
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        Text(
-          _formatDuration(_position),
-          style: style,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(left: 10),
+              child: Text(
+                _formatDuration(_position),
+                style: style,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 10),
+              child: Text(
+                _formatDuration(_duration),
+                style: style,
+              ),
+            ),
+          ],
         ),
-        Expanded(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 5),
-            child: SliderTheme(
-                data: SliderTheme.of(context).copyWith(
-                  trackShape: RetroSliderTrackShape(sliderPos: _slider),
-                  trackHeight: 8,
-                  overlayColor: Colors.transparent,
-                  activeTrackColor: Color.fromARGB(255, 228, 82, 23),
-                  inactiveTrackColor: Color.fromARGB(255, 218, 178, 33),
-                  thumbShape: RetroSliderThumbShape(thumbRadius: 8),
-                ),
-                child: Slider(
-                  value: _slider ?? 0,
-                  onChanged: (value) {
-                    setState(() {
-                      _slider = value;
-                    });
-                  },
-                  onChangeEnd: (value) {
-                    if (_duration != null) {
-                      Duration msec = Duration(
-                          milliseconds:
-                              (_duration.inMilliseconds * value).round());
-                      AudioManager.instance.seekTo(msec);
-                    }
-                  },
-                )),
-          ),
-        ),
-        Text(
-          _formatDuration(_duration),
-          style: style,
+        Row(
+          children: <Widget>[
+            Expanded(
+              child: SliderTheme(
+                  data: SliderTheme.of(context).copyWith(
+                    trackShape: RetroSliderTrackShape(sliderPos: _slider),
+                    trackHeight: 8,
+                    overlayColor: Colors.transparent,
+                    activeTrackColor: Color.fromARGB(255, 228, 82, 23),
+                    inactiveTrackColor: Color.fromARGB(255, 218, 178, 33),
+                    thumbShape: RetroSliderThumbShape(thumbRadius: 8),
+                  ),
+                  child: Slider(
+                    value: _slider ?? 0,
+                    onChanged: (value) {
+                      setState(() {
+                        _slider = value;
+                      });
+                    },
+                    onChangeEnd: (value) {
+                      if (_duration != null) {
+                        Duration msec = Duration(
+                            milliseconds:
+                                (_duration.inMilliseconds * value).round());
+                        AudioManager.instance.seekTo(msec);
+                      }
+                    },
+                  )),
+            ),
+          ],
         ),
       ],
     );
