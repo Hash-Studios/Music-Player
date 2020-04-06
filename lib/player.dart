@@ -46,7 +46,7 @@ class _PlayerPageState extends State<PlayerPage> {
   bool isPlaying = false;
   Duration _duration;
   Duration _position;
-  double _slider;
+  double _slider = 0;
   double _sliderVolume;
   String _error;
   num curIndex = 0;
@@ -189,11 +189,11 @@ class _PlayerPageState extends State<PlayerPage> {
             decoration: BoxDecoration(
               // * Background Gradient
               gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
                 colors: [
-                  Color.fromARGB(247, 38, 40, 43),
-                  Color.fromARGB(255, 35, 37, 39)
+                  Color.fromARGB(247, 51, 57, 62),
+                  Color.fromARGB(255, 28, 30, 34)
                 ],
               ),
             ),
@@ -422,7 +422,7 @@ class _PlayerPageState extends State<PlayerPage> {
                         children: <Widget>[
                           Container(
                             width: constraints.maxWidth * 0.9,
-                            child: songProgress(context),
+                            child: songProgress(context, constraints.maxWidth),
                           ),
                         ],
                       ),
@@ -655,7 +655,7 @@ class _PlayerPageState extends State<PlayerPage> {
     );
   }
 
-  Widget songProgress(BuildContext context) {
+  Widget songProgress(BuildContext context, double width) {
     var style = TextStyle(color: Colors.deepOrange, fontFamily: 'Proxima Nova');
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -684,7 +684,8 @@ class _PlayerPageState extends State<PlayerPage> {
             Expanded(
               child: SliderTheme(
                   data: SliderTheme.of(context).copyWith(
-                    trackShape: RetroSliderTrackShape(sliderPos: _slider),
+                    trackShape:
+                        RetroSliderTrackShape(sliderPos: _slider, width: width),
                     trackHeight: 8,
                     overlayColor: Colors.transparent,
                     activeTrackColor: Color.fromARGB(255, 228, 82, 23),

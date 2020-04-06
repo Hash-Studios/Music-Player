@@ -3,8 +3,9 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 class RetroSliderTrackShape extends SliderTrackShape {
-  var sliderPos;
-  RetroSliderTrackShape({this.sliderPos});
+  double sliderPos = 0;
+  double width = 0;
+  RetroSliderTrackShape({this.sliderPos, this.width});
   @override
   Rect getPreferredRect({
     RenderBox parentBox,
@@ -34,7 +35,7 @@ class RetroSliderTrackShape extends SliderTrackShape {
     SliderThemeData sliderTheme,
     bool isEnabled,
     bool isDiscrete,
-    double sliderPos,
+    double sliderPos = 0,
   }) {
     final double thumbWidth =
         sliderTheme.thumbShape.getPreferredSize(true, isDiscrete).width;
@@ -47,7 +48,7 @@ class RetroSliderTrackShape extends SliderTrackShape {
     final double trackLeft = offset.dx + thumbWidth / 2;
     final double trackTop =
         offset.dy + (parentBox.size.height - trackHeight) / 2;
-    final double trackWidth = sliderPos * 315;
+    final double trackWidth = sliderPos * width * 0.85;
     return Rect.fromLTWH(trackLeft, trackTop, trackWidth, trackHeight);
   }
 

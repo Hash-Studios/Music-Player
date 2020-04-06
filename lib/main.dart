@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:music_player/player.dart';
+import './player.dart';
 import 'package:flutter/services.dart';
+import './queueview.dart';
+import 'player.dart';
 
 // * Main Function
 void main() => runApp(App());
@@ -29,7 +31,7 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.dark,
         primarySwatch: Colors.deepOrange,
       ),
-      home: PlayerPage(title: 'Music Player'),    // * Player Page Instance created
+      home: PlayerPage(),    // * Player Page Instance created
     );
   }
 }
