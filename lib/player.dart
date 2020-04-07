@@ -25,7 +25,15 @@ class PlayerPage extends StatefulWidget {
 
 // * PlayerPage Initial State
 class _PlayerPageState extends State<PlayerPage> {
+  DragStartDetails startHorizontalDragDetails;
+  DragUpdateDetails updateHorizontalDragDetails;
+
   final FlareControls flareControls = FlareControls();
+  final FlareControls flareControls2 = FlareControls();
+  final FlareControls flareControls3 = FlareControls();
+  final FlareControls flareControls4 = FlareControls();
+  final FlareControls flareControls5 = FlareControls();
+
   bool isLiked = false;
   String shuffleMode = 'off'; // on, off
   String repeatMode = 'off'; // on, off, one
@@ -340,6 +348,42 @@ class _PlayerPageState extends State<PlayerPage> {
                                 animation: 'idle',
                               ),
                             ),
+                            SizedBox(
+                              width: 100,
+                              height: 100,
+                              child: FlareActor(
+                                'assets/next.flr',
+                                controller: flareControls2,
+                                animation: 'idle',
+                              ),
+                            ),
+                            SizedBox(
+                              width: 100,
+                              height: 100,
+                              child: FlareActor(
+                                'assets/prev.flr',
+                                controller: flareControls3,
+                                animation: 'idle',
+                              ),
+                            ),
+                            SizedBox(
+                              width: 100,
+                              height: 100,
+                              child: FlareActor(
+                                'assets/play.flr',
+                                controller: flareControls4,
+                                animation: 'idle',
+                              ),
+                            ),
+                            SizedBox(
+                              width: 100,
+                              height: 100,
+                              child: FlareActor(
+                                'assets/pause.flr',
+                                controller: flareControls5,
+                                animation: 'idle',
+                              ),
+                            ),
                             ClipOval(
                               child: GestureDetector(
                                 onTap: () async {
@@ -347,27 +391,50 @@ class _PlayerPageState extends State<PlayerPage> {
                                       await AudioManager.instance.playOrPause();
                                   print("await -- $playing");
                                   HapticFeedback.vibrate();
+                                  playing ? flareControls4.play("play") : flareControls5.play("pause");
                                 },
                                 onDoubleTap: () {
                                   setState(() {
                                     isLiked = !isLiked;
                                   });
+                                  print(isLiked);
                                   flareControls.play("like");
                                   HapticFeedback.vibrate();
                                   isLiked
                                       ? Scaffold.of(context)
-                                          .showSnackBar(dislikeSnackBar)
+                                          .showSnackBar(likeSnackBar)
                                       : Scaffold.of(context)
-                                          .showSnackBar(likeSnackBar);
+                                          .showSnackBar(dislikeSnackBar);
                                 },
-                                onPanUpdate: (details) {
-                                  if (details.delta.dx > 100) {
-                                    HapticFeedback.vibrate();
-                                    AudioManager.instance.previous();
-                                  }
-                                  if (details.delta.dx < 100) {
-                                    HapticFeedback.vibrate();
+                                onHorizontalDragStart: (dragDetails) {
+                                  startHorizontalDragDetails = dragDetails;
+                                },
+                                onHorizontalDragUpdate: (dragDetails) {
+                                  updateHorizontalDragDetails = dragDetails;
+                                },
+                                onHorizontalDragEnd: (endDetails) {
+                                  double dx = updateHorizontalDragDetails
+                                          .globalPosition.dx -
+                                      startHorizontalDragDetails
+                                          .globalPosition.dx;
+                                  double dy = updateHorizontalDragDetails
+                                          .globalPosition.dy -
+                                      startHorizontalDragDetails
+                                          .globalPosition.dy;
+                                  double velocity = endDetails.primaryVelocity;
+
+                                  //Convert values to be positive
+                                  if (dx < 0) dx = -dx;
+                                  if (dy < 0) dy = -dy;
+
+                                  if (velocity < 0) {
                                     AudioManager.instance.next();
+                                    flareControls2.play("next");
+                                    print("Next");
+                                  } else {
+                                    AudioManager.instance.previous();
+                                    flareControls3.play("prev");
+                                    print("Prev");
                                   }
                                 },
                                 child: SizedBox(
@@ -510,6 +577,9 @@ class _PlayerPageState extends State<PlayerPage> {
                                       onPressed: () {
                                         HapticFeedback.vibrate();
                                         AudioManager.instance.previous();
+                                        
+                                    flareControls3.play("prev");
+                                    print("Prev");
                                       },
                                     ),
                                   ),
@@ -550,6 +620,7 @@ class _PlayerPageState extends State<PlayerPage> {
                                             .playOrPause();
                                         print("await -- $playing");
                                         HapticFeedback.vibrate();
+                                        playing ? flareControls4.play("play") : flareControls5.play("pause");
                                       },
                                     ),
                                   ),
@@ -587,6 +658,8 @@ class _PlayerPageState extends State<PlayerPage> {
                                       onPressed: () {
                                         HapticFeedback.vibrate();
                                         AudioManager.instance.next();
+                                        flareControls2.play("next");
+                                        print("Next");
                                       },
                                     ),
                                   ),
