@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.dark,
         primarySwatch: Colors.deepOrange,
       ),
-      home: PlayerPage(),    // * Player Page Instance created
+      home: QueueView(),    // * Player Page Instance created
     );
   }
 }

@@ -12,6 +12,7 @@ import 'package:audio_manager/audio_manager.dart';
 import 'package:path_provider/path_provider.dart';
 import './slider_thumb.dart';
 import './slider_track.dart';
+import './gradientmenu.dart';
 
 // * Main PlayerPage Stateful Widget
 class PlayerPage extends StatefulWidget {
@@ -25,6 +26,7 @@ class PlayerPage extends StatefulWidget {
 
 // * PlayerPage Initial State
 class _PlayerPageState extends State<PlayerPage> {
+  var openMenu = false;
   DragStartDetails startHorizontalDragDetails;
   DragUpdateDetails updateHorizontalDragDetails;
 
@@ -187,6 +189,12 @@ class _PlayerPageState extends State<PlayerPage> {
     });
   }
 
+  void handleMenu() {
+    this.setState(() {
+      openMenu = openMenu ? false : true;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -207,519 +215,550 @@ class _PlayerPageState extends State<PlayerPage> {
             ),
             // * Main SafeArea
             child: SafeArea(
-              child: Center(
-                // * Main Column which contains all UI elements
-                child: Column(
-                  children: <Widget>[
-                    // * This column contains five expanded widgets
-                    // * which all contain row widgets
-                    Expanded(
-                      // * 1st row
-                      flex: 5,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          Container(
-                            // * Back Button
-                            width: constraints.maxWidth * 0.121,
-                            child: Stack(
-                              children: <Widget>[
-                                SecButton(),
-                                Center(
-                                  child: Icon(
-                                    Icons.arrow_back,
-                                    size: 18,
-                                    color: Colors.white38,
-                                  ),
-                                ),
-                                Center(
-                                  child: Container(
-                                    height:
-                                        70, // TODO fix button size over different screen sizes
-                                    width: 70,
-                                    child: FloatingActionButton(
-                                      foregroundColor: Colors.transparent,
-                                      backgroundColor: Colors.transparent,
-                                      splashColor: Color.fromARGB(50, 0, 0, 0),
-                                      focusColor: Color.fromARGB(50, 0, 0, 0),
-                                      elevation: 0,
-                                      hoverElevation: 0,
-                                      hoverColor: Colors.transparent,
-                                      highlightElevation: 0,
-                                      disabledElevation: 0,
-                                      onPressed: () {
-                                        HapticFeedback.vibrate();
-                                      },
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            // * Empty Container
-                            width: constraints.maxWidth * 0.121,
-                          ),
-                          Container(
-                              // * 'PLAYING NOW' Text
-                              child: Text(
-                            'PLAYING NOW',
-                            style: TextStyle(
-                              fontFamily: 'Proxima Nova',
-                              color: Color.fromARGB(255, 117, 119, 122),
-                              fontWeight: FontWeight.bold,
-                              fontSize: 10,
-                            ),
-                          )),
-                          Container(
-                            // * Empty Container
-                            width: constraints.maxWidth * 0.121,
-                          ),
-                          Container(
-                            // * Settings Button
-                            width: constraints.maxWidth * 0.121,
-                            child: Stack(
-                              children: <Widget>[
-                                SecButton(),
-                                Center(
-                                  child: Icon(
-                                    Icons.more_vert,
-                                    size: 18,
-                                    color: Colors.white38,
-                                  ),
-                                ),
-                                Center(
-                                  child: Container(
-                                    height: 70,
-                                    width: 70,
-                                    child: FloatingActionButton(
-                                      foregroundColor: Colors.transparent,
-                                      backgroundColor: Colors.transparent,
-                                      splashColor: Color.fromARGB(50, 0, 0, 0),
-                                      focusColor: Color.fromARGB(50, 0, 0, 0),
-                                      elevation: 0,
-                                      hoverElevation: 0,
-                                      hoverColor: Colors.transparent,
-                                      highlightElevation: 0,
-                                      disabledElevation: 0,
-                                      onPressed: () {
-                                        HapticFeedback.vibrate();
-                                      },
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      // * 2nd row
-                      flex: 25,
-                      child: Center(
-                        child: Stack(
-                          alignment: Alignment.center,
-                          children: <Widget>[
-                            Container(
-                              // * Album Art
-                              width: constraints.maxWidth * 0.85,
-                              height: constraints.maxWidth * 0.85,
-                              child: AlbumArt(),
-                            ),
-                            SizedBox(
-                              // // TODO fix height and width of the image to scale
-                              height: constraints.maxWidth * 0.8,
-                              width: constraints.maxWidth * 0.8,
-                              // // TODO fix this padding to work with diff screen sizes
-                              child: CircleAvatar(
-                                // * Album Art Image
-                                backgroundColor: Color.fromARGB(51, 20, 20, 20),
-                                backgroundImage: AssetImage(
-                                    AudioManager.instance.info.coverUrl),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 100,
-                              height: 100,
-                              child: FlareActor(
-                                'assets/like.flr',
-                                controller: flareControls,
-                                animation: 'idle',
-                              ),
-                            ),
-                            SizedBox(
-                              width: 100,
-                              height: 100,
-                              child: FlareActor(
-                                'assets/next.flr',
-                                controller: flareControls2,
-                                animation: 'idle',
-                              ),
-                            ),
-                            SizedBox(
-                              width: 100,
-                              height: 100,
-                              child: FlareActor(
-                                'assets/prev.flr',
-                                controller: flareControls3,
-                                animation: 'idle',
-                              ),
-                            ),
-                            SizedBox(
-                              width: 100,
-                              height: 100,
-                              child: FlareActor(
-                                'assets/play.flr',
-                                controller: flareControls4,
-                                animation: 'idle',
-                              ),
-                            ),
-                            SizedBox(
-                              width: 100,
-                              height: 100,
-                              child: FlareActor(
-                                'assets/pause.flr',
-                                controller: flareControls5,
-                                animation: 'idle',
-                              ),
-                            ),
-                            ClipOval(
-                              child: GestureDetector(
-                                onTap: () async {
-                                  bool playing =
-                                      await AudioManager.instance.playOrPause();
-                                  print("await -- $playing");
-                                  HapticFeedback.vibrate();
-                                  playing ? flareControls4.play("play") : flareControls5.play("pause");
-                                },
-                                onDoubleTap: () {
-                                  setState(() {
-                                    isLiked = !isLiked;
-                                  });
-                                  print(isLiked);
-                                  flareControls.play("like");
-                                  HapticFeedback.vibrate();
-                                  isLiked
-                                      ? Scaffold.of(context)
-                                          .showSnackBar(likeSnackBar)
-                                      : Scaffold.of(context)
-                                          .showSnackBar(dislikeSnackBar);
-                                },
-                                onHorizontalDragStart: (dragDetails) {
-                                  startHorizontalDragDetails = dragDetails;
-                                },
-                                onHorizontalDragUpdate: (dragDetails) {
-                                  updateHorizontalDragDetails = dragDetails;
-                                },
-                                onHorizontalDragEnd: (endDetails) {
-                                  double dx = updateHorizontalDragDetails
-                                          .globalPosition.dx -
-                                      startHorizontalDragDetails
-                                          .globalPosition.dx;
-                                  double dy = updateHorizontalDragDetails
-                                          .globalPosition.dy -
-                                      startHorizontalDragDetails
-                                          .globalPosition.dy;
-                                  double velocity = endDetails.primaryVelocity;
-
-                                  //Convert values to be positive
-                                  if (dx < 0) dx = -dx;
-                                  if (dy < 0) dy = -dy;
-
-                                  if (velocity < 0) {
-                                    AudioManager.instance.next();
-                                    flareControls2.play("next");
-                                    print("Next");
-                                  } else {
-                                    AudioManager.instance.previous();
-                                    flareControls3.play("prev");
-                                    print("Prev");
-                                  }
-                                },
-                                child: SizedBox(
-                                  width: constraints.maxWidth * 0.8,
-                                  height: constraints.maxWidth * 0.8,
-                                  child: Text(''),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      // * 3rd row
-                      flex: 7,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          // * Song Name and Artist Name
-                          Column(
+              child: Stack(
+                children: <Widget>[
+                  Center(
+                    // * Main Column which contains all UI elements
+                    child: Column(
+                      children: <Widget>[
+                        // * This column contains five expanded widgets
+                        // * which all contain row widgets
+                        Expanded(
+                          // * 1st row
+                          flex: 5,
+                          child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: <Widget>[
-                              Text(''),
-                              Text(
-                                AudioManager.instance.info.title,
-                                style: TextStyle(
-                                  fontFamily: 'Proxima Nova',
-                                  color: Color.fromARGB(255, 167, 168, 170),
-                                  fontSize: 30,
+                              Container(
+                                // * Back Button
+                                width: constraints.maxWidth * 0.121,
+                                child: Stack(
+                                  children: <Widget>[
+                                    SecButton(),
+                                    Center(
+                                      child: Icon(
+                                        Icons.arrow_back,
+                                        size: 18,
+                                        color: Colors.white38,
+                                      ),
+                                    ),
+                                    Center(
+                                      child: Container(
+                                        height:
+                                            70, // TODO fix button size over different screen sizes
+                                        width: 70,
+                                        child: FloatingActionButton(
+                                          heroTag: "back",
+                                          foregroundColor: Colors.transparent,
+                                          backgroundColor: Colors.transparent,
+                                          splashColor:
+                                              Color.fromARGB(50, 0, 0, 0),
+                                          focusColor:
+                                              Color.fromARGB(50, 0, 0, 0),
+                                          elevation: 0,
+                                          hoverElevation: 0,
+                                          hoverColor: Colors.transparent,
+                                          highlightElevation: 0,
+                                          disabledElevation: 0,
+                                          onPressed: () {
+                                            HapticFeedback.vibrate();
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                              Text(
-                                AudioManager.instance.info.desc,
+                              Container(
+                                // * Empty Container
+                                width: constraints.maxWidth * 0.121,
+                              ),
+                              Container(
+                                  // * 'PLAYING NOW' Text
+                                  child: Text(
+                                'PLAYING NOW',
                                 style: TextStyle(
                                   fontFamily: 'Proxima Nova',
                                   color: Color.fromARGB(255, 117, 119, 122),
-                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 10,
+                                ),
+                              )),
+                              Container(
+                                // * Empty Container
+                                width: constraints.maxWidth * 0.121,
+                              ),
+                              Container(
+                                // * Settings Button
+                                width: constraints.maxWidth * 0.121,
+                                child: Stack(
+                                  children: <Widget>[
+                                    SecButton(),
+                                    Center(
+                                      child: Icon(
+                                        Icons.more_vert,
+                                        size: 18,
+                                        color: Colors.white38,
+                                      ),
+                                    ),
+                                    Center(
+                                      child: Container(
+                                        height: 70,
+                                        width: 70,
+                                        child: FloatingActionButton(
+                                          heroTag: "settings",
+                                          foregroundColor: Colors.transparent,
+                                          backgroundColor: Colors.transparent,
+                                          splashColor:
+                                              Color.fromARGB(50, 0, 0, 0),
+                                          focusColor:
+                                              Color.fromARGB(50, 0, 0, 0),
+                                          elevation: 0,
+                                          hoverElevation: 0,
+                                          hoverColor: Colors.transparent,
+                                          highlightElevation: 0,
+                                          disabledElevation: 0,
+                                          onPressed: () {
+                                            HapticFeedback.vibrate();
+                                            handleMenu();
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                              Text(''),
                             ],
                           ),
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      // * 4th row
-                      flex: 7, // FIXME fix seekbar widget thumb
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          Container(
-                            width: constraints.maxWidth * 0.9,
-                            child: songProgress(context, constraints.maxWidth),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      // * 5th row
-                      flex: 8,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          Container(
-                            // * Repeat Button
-                            width: constraints.maxWidth * 0.121,
+                        ),
+                        Expanded(
+                          // * 2nd row
+                          flex: 25,
+                          child: Center(
                             child: Stack(
+                              alignment: Alignment.center,
                               children: <Widget>[
-                                SecButton(),
-                                Center(
-                                  child: Icon(
-                                    repeatMode != 'one'
-                                        ? Icons.repeat
-                                        : Icons.repeat_one,
-                                    size: 18,
-                                    color: repeatMode != 'off'
-                                        ? Colors.deepOrange[400]
-                                        : Colors.white38,
+                                Container(
+                                  // * Album Art
+                                  width: constraints.maxWidth * 0.85,
+                                  height: constraints.maxWidth * 0.85,
+                                  child: AlbumArt(),
+                                ),
+                                SizedBox(
+                                  // // TODO fix height and width of the image to scale
+                                  height: constraints.maxWidth * 0.8,
+                                  width: constraints.maxWidth * 0.8,
+                                  // // TODO fix this padding to work with diff screen sizes
+                                  child: CircleAvatar(
+                                    // * Album Art Image
+                                    backgroundColor:
+                                        Color.fromARGB(51, 20, 20, 20),
+                                    backgroundImage: AssetImage(
+                                        AudioManager.instance.info.coverUrl),
                                   ),
                                 ),
-                                Center(
-                                  child: Container(
-                                    height: 70,
-                                    width: 70,
-                                    child: FloatingActionButton(
-                                      foregroundColor: Colors.transparent,
-                                      backgroundColor: Colors.transparent,
-                                      splashColor: Color.fromARGB(50, 0, 0, 0),
-                                      focusColor: Color.fromARGB(50, 0, 0, 0),
-                                      elevation: 0,
-                                      hoverElevation: 0,
-                                      hoverColor: Colors.transparent,
-                                      highlightElevation: 0,
-                                      disabledElevation: 0,
-                                      onPressed: () {
-                                        HapticFeedback.vibrate();
-                                        setState(() {
-                                          repeatMode == 'on'
-                                              ? repeatMode = 'one'
-                                              : repeatMode == 'one'
-                                                  ? repeatMode = 'off'
-                                                  : repeatMode = 'on';
-                                        });
-                                      },
-                                    ),
+                                SizedBox(
+                                  width: 100,
+                                  height: 100,
+                                  child: FlareActor(
+                                    'assets/like.flr',
+                                    controller: flareControls,
+                                    animation: 'idle',
                                   ),
                                 ),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            // * Backward Button
-                            width: constraints.maxWidth * 0.121,
-                            child: Stack(
-                              children: <Widget>[
-                                SecButton(),
-                                Center(
-                                  child: FaIcon(
-                                    FontAwesomeIcons.backward,
-                                    size: 18,
-                                    color: Colors.white38,
+                                SizedBox(
+                                  width: 100,
+                                  height: 100,
+                                  child: FlareActor(
+                                    'assets/next.flr',
+                                    controller: flareControls2,
+                                    animation: 'idle',
                                   ),
                                 ),
-                                Center(
-                                  child: Container(
-                                    height: 70,
-                                    width: 70,
-                                    child: FloatingActionButton(
-                                      foregroundColor: Colors.transparent,
-                                      backgroundColor: Colors.transparent,
-                                      splashColor: Color.fromARGB(50, 0, 0, 0),
-                                      focusColor: Color.fromARGB(50, 0, 0, 0),
-                                      elevation: 0,
-                                      hoverElevation: 0,
-                                      hoverColor: Colors.transparent,
-                                      highlightElevation: 0,
-                                      disabledElevation: 0,
-                                      onPressed: () {
-                                        HapticFeedback.vibrate();
-                                        AudioManager.instance.previous();
-                                        
-                                    flareControls3.play("prev");
-                                    print("Prev");
-                                      },
-                                    ),
+                                SizedBox(
+                                  width: 100,
+                                  height: 100,
+                                  child: FlareActor(
+                                    'assets/prev.flr',
+                                    controller: flareControls3,
+                                    animation: 'idle',
                                   ),
                                 ),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            // * Play/Pause Button
-                            width: constraints.maxWidth * 0.194,
-                            child: Stack(
-                              children: <Widget>[
-                                PlayPause(),
-                                Center(
-                                  child: FaIcon(
-                                    isPlaying
-                                        ? FontAwesomeIcons.pause
-                                        : FontAwesomeIcons.play,
-                                    size: 18,
-                                    color: Colors.white70,
+                                SizedBox(
+                                  width: 100,
+                                  height: 100,
+                                  child: FlareActor(
+                                    'assets/play.flr',
+                                    controller: flareControls4,
+                                    animation: 'idle',
                                   ),
                                 ),
-                                Center(
-                                  child: Container(
-                                    height: 90,
-                                    width: 90,
-                                    child: FloatingActionButton(
-                                      foregroundColor: Colors.transparent,
-                                      backgroundColor: Colors.transparent,
-                                      elevation: 0,
-                                      hoverElevation: 0,
-                                      hoverColor: Colors.transparent,
-                                      highlightElevation: 0,
-                                      disabledElevation: 0,
-                                      onPressed: () async {
-                                        bool playing = await AudioManager
-                                            .instance
-                                            .playOrPause();
-                                        print("await -- $playing");
-                                        HapticFeedback.vibrate();
-                                        playing ? flareControls4.play("play") : flareControls5.play("pause");
-                                      },
-                                    ),
+                                SizedBox(
+                                  width: 100,
+                                  height: 100,
+                                  child: FlareActor(
+                                    'assets/pause.flr',
+                                    controller: flareControls5,
+                                    animation: 'idle',
                                   ),
                                 ),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            // * Forward Button
-                            width: constraints.maxWidth * 0.121,
-                            child: Stack(
-                              children: <Widget>[
-                                SecButton(),
-                                Center(
-                                  child: FaIcon(
-                                    FontAwesomeIcons.forward,
-                                    size: 18,
-                                    color: Colors.white38,
-                                  ),
-                                ),
-                                Center(
-                                  child: Container(
-                                    height: 70,
-                                    width: 70,
-                                    child: FloatingActionButton(
-                                      foregroundColor: Colors.transparent,
-                                      backgroundColor: Colors.transparent,
-                                      splashColor: Color.fromARGB(50, 0, 0, 0),
-                                      focusColor: Color.fromARGB(50, 0, 0, 0),
-                                      elevation: 0,
-                                      hoverElevation: 0,
-                                      hoverColor: Colors.transparent,
-                                      highlightElevation: 0,
-                                      disabledElevation: 0,
-                                      onPressed: () {
-                                        HapticFeedback.vibrate();
+                                ClipOval(
+                                  child: GestureDetector(
+                                    onTap: () async {
+                                      bool playing = await AudioManager.instance
+                                          .playOrPause();
+                                      print("await -- $playing");
+                                      playing
+                                          ? flareControls4.play("play")
+                                          : flareControls5.play("pause");
+                                    },
+                                    onDoubleTap: () {
+                                      setState(() {
+                                        isLiked = !isLiked;
+                                      });
+                                      print(isLiked);
+                                      flareControls.play("like");
+                                      isLiked
+                                          ? Scaffold.of(context)
+                                              .showSnackBar(likeSnackBar)
+                                          : Scaffold.of(context)
+                                              .showSnackBar(dislikeSnackBar);
+                                    },
+                                    onHorizontalDragStart: (dragDetails) {
+                                      startHorizontalDragDetails = dragDetails;
+                                    },
+                                    onHorizontalDragUpdate: (dragDetails) {
+                                      updateHorizontalDragDetails = dragDetails;
+                                    },
+                                    onHorizontalDragEnd: (endDetails) {
+                                      double dx = updateHorizontalDragDetails
+                                              .globalPosition.dx -
+                                          startHorizontalDragDetails
+                                              .globalPosition.dx;
+                                      double dy = updateHorizontalDragDetails
+                                              .globalPosition.dy -
+                                          startHorizontalDragDetails
+                                              .globalPosition.dy;
+                                      double velocity =
+                                          endDetails.primaryVelocity;
+
+                                      //Convert values to be positive
+                                      if (dx < 0) dx = -dx;
+                                      if (dy < 0) dy = -dy;
+
+                                      if (velocity < 0) {
                                         AudioManager.instance.next();
                                         flareControls2.play("next");
                                         print("Next");
-                                      },
+                                      } else {
+                                        AudioManager.instance.previous();
+                                        flareControls3.play("prev");
+                                        print("Prev");
+                                      }
+                                    },
+                                    child: SizedBox(
+                                      width: constraints.maxWidth * 0.8,
+                                      height: constraints.maxWidth * 0.8,
+                                      child: Text(''),
                                     ),
                                   ),
                                 ),
                               ],
                             ),
                           ),
-                          Container(
-                            // * Shuffle Button
-                            width: constraints.maxWidth * 0.121,
-                            child: Stack(
-                              children: <Widget>[
-                                SecButton(),
-                                Center(
-                                  child: Icon(
-                                    Icons.shuffle,
-                                    size: 18,
-                                    color: shuffleMode == 'on'
-                                        ? Colors.deepOrange[400]
-                                        : Colors.white38,
-                                  ),
-                                ),
-                                Center(
-                                  child: Container(
-                                    height: 70,
-                                    width: 70,
-                                    child: FloatingActionButton(
-                                      foregroundColor: Colors.transparent,
-                                      backgroundColor: Colors.transparent,
-                                      splashColor: Color.fromARGB(50, 0, 0, 0),
-                                      focusColor: Color.fromARGB(50, 0, 0, 0),
-                                      elevation: 0,
-                                      hoverElevation: 0,
-                                      hoverColor: Colors.transparent,
-                                      highlightElevation: 0,
-                                      disabledElevation: 0,
-                                      onPressed: () {
-                                        HapticFeedback.vibrate();
-                                        setState(() {
-                                          shuffleMode == 'on'
-                                              ? shuffleMode = 'off'
-                                              : shuffleMode = 'on';
-                                        });
-                                      },
+                        ),
+                        Expanded(
+                          // * 3rd row
+                          flex: 7,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              // * Song Name and Artist Name
+                              Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: <Widget>[
+                                  Text(''),
+                                  Text(
+                                    AudioManager.instance.info.title,
+                                    style: TextStyle(
+                                      fontFamily: 'Proxima Nova',
+                                      color: Color.fromARGB(255, 167, 168, 170),
+                                      fontSize: 30,
                                     ),
                                   ),
-                                ),
-                              ],
-                            ),
+                                  Text(
+                                    AudioManager.instance.info.desc,
+                                    style: TextStyle(
+                                      fontFamily: 'Proxima Nova',
+                                      color: Color.fromARGB(255, 117, 119, 122),
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                  Text(''),
+                                ],
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
+                        ),
+                        Expanded(
+                          // * 4th row
+                          flex: 7, // FIXME fix seekbar widget thumb
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              Container(
+                                width: constraints.maxWidth * 0.9,
+                                child:
+                                    songProgress(context, constraints.maxWidth),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                          // * 5th row
+                          flex: 8,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              Container(
+                                // * Repeat Button
+                                width: constraints.maxWidth * 0.121,
+                                child: Stack(
+                                  children: <Widget>[
+                                    SecButton(),
+                                    Center(
+                                      child: Icon(
+                                        repeatMode != 'one'
+                                            ? Icons.repeat
+                                            : Icons.repeat_one,
+                                        size: 18,
+                                        color: repeatMode != 'off'
+                                            ? Colors.deepOrange[400]
+                                            : Colors.white38,
+                                      ),
+                                    ),
+                                    Center(
+                                      child: Container(
+                                        height: 70,
+                                        width: 70,
+                                        child: FloatingActionButton(
+                                          heroTag: "repeat",
+                                          foregroundColor: Colors.transparent,
+                                          backgroundColor: Colors.transparent,
+                                          splashColor:
+                                              Color.fromARGB(50, 0, 0, 0),
+                                          focusColor:
+                                              Color.fromARGB(50, 0, 0, 0),
+                                          elevation: 0,
+                                          hoverElevation: 0,
+                                          hoverColor: Colors.transparent,
+                                          highlightElevation: 0,
+                                          disabledElevation: 0,
+                                          onPressed: () {
+                                            HapticFeedback.vibrate();
+                                            setState(() {
+                                              repeatMode == 'on'
+                                                  ? repeatMode = 'one'
+                                                  : repeatMode == 'one'
+                                                      ? repeatMode = 'off'
+                                                      : repeatMode = 'on';
+                                            });
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                // * Backward Button
+                                width: constraints.maxWidth * 0.121,
+                                child: Stack(
+                                  children: <Widget>[
+                                    SecButton(),
+                                    Center(
+                                      child: FaIcon(
+                                        FontAwesomeIcons.backward,
+                                        size: 18,
+                                        color: Colors.white38,
+                                      ),
+                                    ),
+                                    Center(
+                                      child: Container(
+                                        height: 70,
+                                        width: 70,
+                                        child: FloatingActionButton(
+                                          heroTag: "backward",
+                                          foregroundColor: Colors.transparent,
+                                          backgroundColor: Colors.transparent,
+                                          splashColor:
+                                              Color.fromARGB(50, 0, 0, 0),
+                                          focusColor:
+                                              Color.fromARGB(50, 0, 0, 0),
+                                          elevation: 0,
+                                          hoverElevation: 0,
+                                          hoverColor: Colors.transparent,
+                                          highlightElevation: 0,
+                                          disabledElevation: 0,
+                                          onPressed: () {
+                                            HapticFeedback.vibrate();
+                                            AudioManager.instance.previous();
+
+                                            flareControls3.play("prev");
+                                            print("Prev");
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                // * Play/Pause Button
+                                width: constraints.maxWidth * 0.194,
+                                child: Stack(
+                                  children: <Widget>[
+                                    PlayPause(),
+                                    Center(
+                                      child: FaIcon(
+                                        isPlaying
+                                            ? FontAwesomeIcons.pause
+                                            : FontAwesomeIcons.play,
+                                        size: 18,
+                                        color: Colors.white70,
+                                      ),
+                                    ),
+                                    Center(
+                                      child: Container(
+                                        height: 90,
+                                        width: 90,
+                                        child: FloatingActionButton(
+                                          heroTag: "playPause",
+                                          foregroundColor: Colors.transparent,
+                                          backgroundColor: Colors.transparent,
+                                          elevation: 0,
+                                          hoverElevation: 0,
+                                          hoverColor: Colors.transparent,
+                                          highlightElevation: 0,
+                                          disabledElevation: 0,
+                                          onPressed: () async {
+                                            bool playing = await AudioManager
+                                                .instance
+                                                .playOrPause();
+                                            print("await -- $playing");
+                                            HapticFeedback.vibrate();
+                                            playing
+                                                ? flareControls4.play("play")
+                                                : flareControls5.play("pause");
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                // * Forward Button
+                                width: constraints.maxWidth * 0.121,
+                                child: Stack(
+                                  children: <Widget>[
+                                    SecButton(),
+                                    Center(
+                                      child: FaIcon(
+                                        FontAwesomeIcons.forward,
+                                        size: 18,
+                                        color: Colors.white38,
+                                      ),
+                                    ),
+                                    Center(
+                                      child: Container(
+                                        height: 70,
+                                        width: 70,
+                                        child: FloatingActionButton(
+                                          heroTag: "forward",
+                                          foregroundColor: Colors.transparent,
+                                          backgroundColor: Colors.transparent,
+                                          splashColor:
+                                              Color.fromARGB(50, 0, 0, 0),
+                                          focusColor:
+                                              Color.fromARGB(50, 0, 0, 0),
+                                          elevation: 0,
+                                          hoverElevation: 0,
+                                          hoverColor: Colors.transparent,
+                                          highlightElevation: 0,
+                                          disabledElevation: 0,
+                                          onPressed: () {
+                                            HapticFeedback.vibrate();
+                                            AudioManager.instance.next();
+                                            flareControls2.play("next");
+                                            print("Next");
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                // * Shuffle Button
+                                width: constraints.maxWidth * 0.121,
+                                child: Stack(
+                                  children: <Widget>[
+                                    SecButton(),
+                                    Center(
+                                      child: Icon(
+                                        Icons.shuffle,
+                                        size: 18,
+                                        color: shuffleMode == 'on'
+                                            ? Colors.deepOrange[400]
+                                            : Colors.white38,
+                                      ),
+                                    ),
+                                    Center(
+                                      child: Container(
+                                        height: 70,
+                                        width: 70,
+                                        child: FloatingActionButton(
+                                          heroTag: "shuffle",
+                                          foregroundColor: Colors.transparent,
+                                          backgroundColor: Colors.transparent,
+                                          splashColor:
+                                              Color.fromARGB(50, 0, 0, 0),
+                                          focusColor:
+                                              Color.fromARGB(50, 0, 0, 0),
+                                          elevation: 0,
+                                          hoverElevation: 0,
+                                          hoverColor: Colors.transparent,
+                                          highlightElevation: 0,
+                                          disabledElevation: 0,
+                                          onPressed: () {
+                                            HapticFeedback.vibrate();
+                                            setState(() {
+                                              shuffleMode == 'on'
+                                                  ? shuffleMode = 'off'
+                                                  : shuffleMode = 'on';
+                                            });
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        // * 6th row
+                        Expanded(
+                          flex: 3,
+                          child: Text(''),
+                        ),
+                      ],
                     ),
-                    // * 6th row
-                    Expanded(
-                      flex: 3,
-                      child: Text(''),
-                    ),
-                  ],
-                ),
+                  ),
+                  openMenu ? GradientMenu(handleMenu: handleMenu) : Container(),
+                ],
               ),
             ),
           );
