@@ -17,7 +17,39 @@ import './audioplayerdata.dart';
 
 // * Main PlayerPage Stateful Widget
 class PlayerPage extends StatefulWidget {
-  PlayerPage({Key key, this.title,}) : super(key: key);
+  bool isLiked;
+  String shuffleMode;
+  String repeatMode;
+  var likeSnackBar;
+  var dislikeSnackBar;
+  String platformVersion;
+  bool isPlaying;
+  Duration duration;
+  Duration position;
+  double slider;
+  double sliderVolume;
+  String error;
+  num curIndex;
+  PlayMode playMode;
+  var list;
+  PlayerPage({
+    Key key,
+    this.title,
+    this.isLiked,
+    this.shuffleMode,
+    this.repeatMode,
+    this.likeSnackBar,
+    this.dislikeSnackBar,
+    this.platformVersion,
+    this.isPlaying,
+    this.duration,
+    this.slider,
+    this.sliderVolume,
+    this.error,
+    this.curIndex,
+    this.playMode,
+    this.list,
+  }) : super(key: key);
 
   final String title;
 
@@ -37,24 +69,6 @@ class _PlayerPageState extends State<PlayerPage> {
   final FlareControls flareControls4 = FlareControls();
   final FlareControls flareControls5 = FlareControls();
 
-  bool isLiked = AudioData.getIsLiked;
-  String shuffleMode = AudioData.getShuffleMode; // on, off
-  String repeatMode = AudioData.getRepeatMode; // on, off, one
-  final likeSnackBar = AudioData.getLikeSnackBar;
-  final dislikeSnackBar = AudioData.getDislikeSnackBar;
-
-  String _platformVersion = AudioData.getPlatformVersion;
-  bool isPlaying = AudioData.getIsPlaying;
-  Duration _duration = AudioData.getDuration;
-  Duration _position = AudioData.getPosition;
-  double _slider = AudioData.getSlider;
-  double _sliderVolume = AudioData.getSliderVolume;
-  String _error = AudioData.getError;
-  num curIndex = AudioData.getCurIndex;
-  PlayMode playMode = AudioData.getPlayMode;
-
-  final list = AudioData.getList;
-
   @override
   void initState() {
     super.initState();
@@ -69,11 +83,10 @@ class _PlayerPageState extends State<PlayerPage> {
   //   AudioManager.instance.stop();
   //   super.dispose();
   // }
-  
 
   void setupAudio() {
     List<AudioInfo> _list = [];
-    list.forEach(
+    widget.list.forEach(
       (item) => _list.add(
         AudioInfo(item["url"],
             title: item["title"],
@@ -91,23 +104,24 @@ class _PlayerPageState extends State<PlayerPage> {
       switch (events) {
         case AudioManagerEvents.start:
           print("start load data callback");
-          _position = AudioManager.instance.position;
-          _duration = AudioManager.instance.duration;
-          _slider = 0;
+          widget.position = AudioManager.instance.position;
+          widget.duration = AudioManager.instance.duration;
+          widget.slider = 0;
           setState(() {});
           break;
         case AudioManagerEvents.ready:
           print("ready to play");
-          _error = null;
-          _sliderVolume = AudioManager.instance.volume;
-          _position = AudioManager.instance.position;
-          _duration = AudioManager.instance.duration;
+          widget.error = null;
+          widget.sliderVolume = AudioManager.instance.volume;
+          widget.position = AudioManager.instance.position;
+          widget.duration = AudioManager.instance.duration;
           setState(() {});
           AudioManager.instance.seekTo(Duration(microseconds: 10));
           break;
         case AudioManagerEvents.seekComplete:
-          _position = AudioManager.instance.position;
-          _slider = _position.inMilliseconds / _duration.inMilliseconds;
+          widget.position = AudioManager.instance.position;
+          widget.slider =
+              widget.position.inMilliseconds / widget.duration.inMilliseconds;
           setState(() {});
           print("seek event is completed. position is [$args]/ms");
           break;
@@ -115,24 +129,25 @@ class _PlayerPageState extends State<PlayerPage> {
           print("buffering $args");
           break;
         case AudioManagerEvents.playstatus:
-          isPlaying = AudioManager.instance.isPlaying;
+          widget.isPlaying = AudioManager.instance.isPlaying;
           setState(() {});
           break;
         case AudioManagerEvents.timeupdate:
-          _position = AudioManager.instance.position;
-          _slider = _position.inMilliseconds / _duration.inMilliseconds;
+          widget.position = AudioManager.instance.position;
+          widget.slider =
+              widget.position.inMilliseconds / widget.duration.inMilliseconds;
           setState(() {});
           AudioManager.instance.updateLrc(args["position"].toString());
           break;
         case AudioManagerEvents.error:
-          _error = args;
+          widget.error = args;
           setState(() {});
           break;
         case AudioManagerEvents.ended:
           AudioManager.instance.next();
           break;
         case AudioManagerEvents.volumeChange:
-          _sliderVolume = AudioManager.instance.volume;
+          widget.sliderVolume = AudioManager.instance.volume;
           setState(() {});
           break;
         default:
@@ -150,7 +165,7 @@ class _PlayerPageState extends State<PlayerPage> {
         desc: "local file",
         coverUrl: "https://homepages.cae.wisc.edu/~ece533/images/baboon.png");
 
-    list.add(info.toJson());
+    widget.list.add(info.toJson());
     AudioManager.instance.audioList.add(info);
   }
 
@@ -164,7 +179,7 @@ class _PlayerPageState extends State<PlayerPage> {
     if (!mounted) return;
 
     setState(() {
-      _platformVersion = platformVersion;
+      widget.platformVersion = platformVersion;
     });
   }
 
@@ -393,15 +408,15 @@ class _PlayerPageState extends State<PlayerPage> {
                                     },
                                     onDoubleTap: () {
                                       setState(() {
-                                        isLiked = !isLiked;
+                                        widget.isLiked = !widget.isLiked;
                                       });
-                                      print(isLiked);
+                                      print(widget.isLiked);
                                       flareControls.play("like");
-                                      isLiked
-                                          ? Scaffold.of(context)
-                                              .showSnackBar(dislikeSnackBar)
-                                          : Scaffold.of(context)
-                                              .showSnackBar(likeSnackBar);
+                                      widget.isLiked
+                                          ? Scaffold.of(context).showSnackBar(
+                                              widget.dislikeSnackBar)
+                                          : Scaffold.of(context).showSnackBar(
+                                              widget.likeSnackBar);
                                     },
                                     onHorizontalDragStart: (dragDetails) {
                                       startHorizontalDragDetails = dragDetails;
@@ -508,11 +523,11 @@ class _PlayerPageState extends State<PlayerPage> {
                                     SecButton(),
                                     Center(
                                       child: Icon(
-                                        repeatMode != 'one'
+                                        widget.repeatMode != 'one'
                                             ? Icons.repeat
                                             : Icons.repeat_one,
                                         size: 18,
-                                        color: repeatMode != 'off'
+                                        color: widget.repeatMode != 'off'
                                             ? Colors.deepOrange[400]
                                             : Colors.white38,
                                       ),
@@ -537,11 +552,13 @@ class _PlayerPageState extends State<PlayerPage> {
                                           onPressed: () {
                                             HapticFeedback.vibrate();
                                             setState(() {
-                                              repeatMode == 'on'
-                                                  ? repeatMode = 'one'
-                                                  : repeatMode == 'one'
-                                                      ? repeatMode = 'off'
-                                                      : repeatMode = 'on';
+                                              widget.repeatMode == 'on'
+                                                  ? widget.repeatMode = 'one'
+                                                  : widget.repeatMode == 'one'
+                                                      ? widget.repeatMode =
+                                                          'off'
+                                                      : widget.repeatMode =
+                                                          'on';
                                             });
                                           },
                                         ),
@@ -601,7 +618,7 @@ class _PlayerPageState extends State<PlayerPage> {
                                     PlayPause(),
                                     Center(
                                       child: FaIcon(
-                                        isPlaying
+                                        widget.isPlaying
                                             ? FontAwesomeIcons.pause
                                             : FontAwesomeIcons.play,
                                         size: 18,
@@ -689,7 +706,7 @@ class _PlayerPageState extends State<PlayerPage> {
                                       child: Icon(
                                         Icons.shuffle,
                                         size: 18,
-                                        color: shuffleMode == 'on'
+                                        color: widget.shuffleMode == 'on'
                                             ? Colors.deepOrange[400]
                                             : Colors.white38,
                                       ),
@@ -714,9 +731,9 @@ class _PlayerPageState extends State<PlayerPage> {
                                           onPressed: () {
                                             HapticFeedback.vibrate();
                                             setState(() {
-                                              shuffleMode == 'on'
-                                                  ? shuffleMode = 'off'
-                                                  : shuffleMode = 'on';
+                                              widget.shuffleMode == 'on'
+                                                  ? widget.shuffleMode = 'off'
+                                                  : widget.shuffleMode = 'on';
                                             });
                                           },
                                         ),
@@ -757,14 +774,14 @@ class _PlayerPageState extends State<PlayerPage> {
             Padding(
               padding: const EdgeInsets.only(left: 10),
               child: Text(
-                _formatDuration(_position),
+                _formatDuration(widget.position),
                 style: style,
               ),
             ),
             Padding(
               padding: const EdgeInsets.only(right: 10),
               child: Text(
-                _formatDuration(_duration),
+                _formatDuration(widget.duration),
                 style: style,
               ),
             ),
@@ -775,8 +792,8 @@ class _PlayerPageState extends State<PlayerPage> {
             Expanded(
               child: SliderTheme(
                   data: SliderTheme.of(context).copyWith(
-                    trackShape:
-                        RetroSliderTrackShape(sliderPos: _slider, width: width),
+                    trackShape: RetroSliderTrackShape(
+                        sliderPos: widget.slider, width: width),
                     trackHeight: 8,
                     overlayColor: Colors.transparent,
                     activeTrackColor: Color.fromARGB(255, 228, 82, 23),
@@ -784,17 +801,18 @@ class _PlayerPageState extends State<PlayerPage> {
                     thumbShape: RetroSliderThumbShape(thumbRadius: 8),
                   ),
                   child: Slider(
-                    value: _slider ?? 0,
+                    value: widget.slider ?? 0,
                     onChanged: (value) {
                       setState(() {
-                        _slider = value;
+                        widget.slider = value;
                       });
                     },
                     onChangeEnd: (value) {
-                      if (_duration != null) {
+                      if (widget.duration != null) {
                         Duration msec = Duration(
                             milliseconds:
-                                (_duration.inMilliseconds * value).round());
+                                (widget.duration.inMilliseconds * value)
+                                    .round());
                         AudioManager.instance.seekTo(msec);
                       }
                     },

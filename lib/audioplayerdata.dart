@@ -31,6 +31,7 @@ class AudioData {
     duration: Duration(milliseconds: 500),
     elevation: 10,
   );
+  
 
   static String _platformVersion = 'Unknown';
   static bool isPlaying = false;
