@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import './player.dart';
 import 'package:flutter/services.dart';
 import './queueview.dart';
-import 'player.dart';
 
 // * Main Function
 void main() => runApp(App());

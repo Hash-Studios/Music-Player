@@ -13,10 +13,11 @@ import 'package:path_provider/path_provider.dart';
 import './slider_thumb.dart';
 import './slider_track.dart';
 import './gradientmenu.dart';
+import './audioplayerdata.dart';
 
 // * Main PlayerPage Stateful Widget
 class PlayerPage extends StatefulWidget {
-  PlayerPage({Key key, this.title}) : super(key: key);
+  PlayerPage({Key key, this.title,}) : super(key: key);
 
   final String title;
 
@@ -36,46 +37,23 @@ class _PlayerPageState extends State<PlayerPage> {
   final FlareControls flareControls4 = FlareControls();
   final FlareControls flareControls5 = FlareControls();
 
-  bool isLiked = false;
-  String shuffleMode = 'off'; // on, off
-  String repeatMode = 'off'; // on, off, one
-  final likeSnackBar = SnackBar(
-    content: Text('Yay! Added to favourites!'),
-    backgroundColor: Colors.white24,
-    duration: Duration(milliseconds: 500),
-    elevation: 10,
-  );
-  final dislikeSnackBar = SnackBar(
-    content: Text('Removed from favourites!'),
-    backgroundColor: Colors.white24,
-    duration: Duration(milliseconds: 500),
-    elevation: 10,
-  );
+  bool isLiked = AudioData.getIsLiked;
+  String shuffleMode = AudioData.getShuffleMode; // on, off
+  String repeatMode = AudioData.getRepeatMode; // on, off, one
+  final likeSnackBar = AudioData.getLikeSnackBar;
+  final dislikeSnackBar = AudioData.getDislikeSnackBar;
 
-  String _platformVersion = 'Unknown';
-  bool isPlaying = false;
-  Duration _duration;
-  Duration _position;
-  double _slider = 0;
-  double _sliderVolume;
-  String _error;
-  num curIndex = 0;
-  PlayMode playMode = AudioManager.instance.playMode;
+  String _platformVersion = AudioData.getPlatformVersion;
+  bool isPlaying = AudioData.getIsPlaying;
+  Duration _duration = AudioData.getDuration;
+  Duration _position = AudioData.getPosition;
+  double _slider = AudioData.getSlider;
+  double _sliderVolume = AudioData.getSliderVolume;
+  String _error = AudioData.getError;
+  num curIndex = AudioData.getCurIndex;
+  PlayMode playMode = AudioData.getPlayMode;
 
-  final list = [
-    {
-      "title": "End of Time",
-      "desc": "K-391, Alan Walker & Ahrix",
-      "url": "assets/audio.mp3",
-      "coverUrl": "assets/album_art.png"
-    },
-    {
-      "title": "SOS",
-      "desc": "Avicii",
-      "url": "assets/audio2.mp3",
-      "coverUrl": "assets/album_art2.png"
-    },
-  ];
+  final list = AudioData.getList;
 
   @override
   void initState() {
@@ -86,11 +64,12 @@ class _PlayerPageState extends State<PlayerPage> {
     // loadFile();
   }
 
-  @override
-  void dispose() {
-    AudioManager.instance.stop();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   AudioManager.instance.stop();
+  //   super.dispose();
+  // }
+  
 
   void setupAudio() {
     List<AudioInfo> _list = [];
@@ -420,9 +399,9 @@ class _PlayerPageState extends State<PlayerPage> {
                                       flareControls.play("like");
                                       isLiked
                                           ? Scaffold.of(context)
-                                              .showSnackBar(likeSnackBar)
+                                              .showSnackBar(dislikeSnackBar)
                                           : Scaffold.of(context)
-                                              .showSnackBar(dislikeSnackBar);
+                                              .showSnackBar(likeSnackBar);
                                     },
                                     onHorizontalDragStart: (dragDetails) {
                                       startHorizontalDragDetails = dragDetails;
