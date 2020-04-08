@@ -137,19 +137,19 @@ class _QueueViewState extends State<QueueView> {
                             children: <Widget>[
                               Text(''),
                               Text(
-                                'End of Time',
+                                AudioManager.instance.info.title,
                                 style: TextStyle(
-                                  fontFamily: 'Proxima Nova',
+                                  fontFamily: 'Gotham',
                                   color: Color.fromARGB(255, 167, 168, 170),
-                                  fontSize: 18,
+                                  fontSize: 16,
                                 ),
                               ),
                               Text(
-                                'K-391, Alan Walker & Ahrix',
+                                AudioManager.instance.info.desc,
                                 style: TextStyle(
-                                  fontFamily: 'Proxima Nova',
+                                  fontFamily: 'Gotham',
                                   color: Color.fromARGB(255, 117, 119, 122),
-                                  fontSize: 18,
+                                  fontSize: 16,
                                 ),
                               ),
                             ],
@@ -162,7 +162,7 @@ class _QueueViewState extends State<QueueView> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
                             Container(
-                              // * Back Button
+                              // * Fav Button
                               width: constraints.maxWidth * 0.121,
                               child: Stack(
                                 children: <Widget>[
@@ -200,61 +200,44 @@ class _QueueViewState extends State<QueueView> {
                                 ],
                               ),
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                            Container(child: Center(
+                            child: Stack(
+                              alignment: Alignment.center,
                               children: <Widget>[
-                                // GestureDetector(
-                                //   onTap: () async {
-                                //     bool playing =
-                                //         await AudioManager.instance.playOrPause();
-                                //     print("await -- $playing");
-                                //     HapticFeedback.vibrate();
-                                //     setState(
-                                //       () {
-                                //         isPlayed = !isPlayed;
-                                //       },
-                                //     );
-                                //   },
-                                //   onDoubleTap: () {
-                                //     setState(() {
-                                //       isLiked = !isLiked;
-                                //     });
-                                //     flareControls.play("like");
-                                //     HapticFeedback.vibrate();
-                                //     isLiked
-                                //         ? Scaffold.of(context)
-                                //             .showSnackBar(dislikeSnackBar)
-                                //         : Scaffold.of(context)
-                                //             .showSnackBar(likeSnackBar);
-                                //   },
-                                // child:
-                                Stack(
-                                  alignment: Alignment.center,
-                                  children: <Widget>[
-                                    Container(
-                                      // * Album Art
-                                      width: constraints.maxWidth * 0.43,
-                                      height: constraints.maxWidth * 0.43,
-                                      child: AlbumArt(),
-                                    ),
-                                    SizedBox(
-                                      // // TODO fix height and width of the image to scale
-                                      height: constraints.maxWidth * 0.4,
-                                      width: constraints.maxWidth * 0.4,
-                                      // // TODO fix this padding to work with diff screen sizes
-                                      child: CircleAvatar(
-                                        // * Album Art Image
-                                        backgroundColor:
-                                            Color.fromARGB(51, 20, 20, 20),
-                                        backgroundImage: AssetImage(AudioManager
-                                            .instance.info.coverUrl),
-                                      ),
-                                    ),
-                                  ],
+                                Container(
+                                  // * Album Art
+                                  width: constraints.maxWidth * 0.43,
+                                  height: constraints.maxWidth * 0.43,
+                                  child: AlbumArt(),
                                 ),
-                                // ),
+                                SizedBox(
+                                  // // TODO fix height and width of the image to scale
+                                  height: constraints.maxWidth * 0.4,
+                                  width: constraints.maxWidth * 0.4,
+                                  // // TODO fix this padding to work with diff screen sizes
+                                  child: CircleAvatar(
+                                    // * Album Art Image
+                                    backgroundColor:
+                                        Color.fromARGB(51, 20, 20, 20),
+                                    backgroundImage: AssetImage(
+                                        AudioManager.instance.info.coverUrl),
+                                  ),
+                                ),
+                                ClipOval(
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      print("tapped");
+                                    },
+                                    child: SizedBox(
+                                      width: constraints.maxWidth * 0.4,
+                                      height: constraints.maxWidth * 0.4,
+                                      child: Text(''),
+                                    ),
+                                  ),
+                                ),
                               ],
                             ),
+                          ),),
                             Container(
                               // * Back Button
                               width: constraints.maxWidth * 0.121,
@@ -301,7 +284,7 @@ class _QueueViewState extends State<QueueView> {
                       Expanded(
                           flex: 6,
                           child: ListView.builder(
-                              itemCount: europeanCountries.length,
+                              itemCount: widget.list.length,
                               itemBuilder: (context, index) {
                                 return Padding(
                                   padding: const EdgeInsets.symmetric(
@@ -335,8 +318,8 @@ class _QueueViewState extends State<QueueView> {
                                       );
                                     },
                                     trailing: Container(
-                                      // * Back Button
-                                      width: constraints.maxWidth * 0.121,
+                                      // * Play Button
+                                      width: constraints.maxWidth * 0.101,
                                       child: Stack(
                                         children: <Widget>[
                                           SecButton(),
@@ -411,11 +394,11 @@ class _QueueViewState extends State<QueueView> {
                                       ),
                                     ),
                                     title: Text(
-                                      europeanCountries[index],
+                                      widget.list[index]["title"],
                                       style:
-                                          TextStyle(fontFamily: "Proxima Nova"),
+                                          TextStyle(fontFamily: "Gotham"),
                                     ),
-                                    subtitle: Text(europeanCountries[index]),
+                                    subtitle: Text(widget.list[index]["desc"]),
                                   ),
                                 );
                               }))

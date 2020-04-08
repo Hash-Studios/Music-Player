@@ -23,7 +23,6 @@ dependencies:
   audio_manager: ^0.5.3+2
   path_provider: ^1.6.5
   flare_flutter: ^2.0.2
-  flutter_bloc: ^3.2.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -45,8 +44,6 @@ flutter:
 
   assets:
     - assets/
-    - assets/audio.mp3
-    - assets/audio2.mp3
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
   # For details regarding adding assets from package dependencies, see
@@ -60,6 +57,10 @@ fonts:
   - family: Proxima Nova
     fonts:
       - asset: assets/proxima_nova_font/ProximaNova-Regular.otf
+
+  - family: Gotham
+    fonts:
+      - asset: assets/gotham_font/Gotham-Light.otf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

@@ -124,7 +124,7 @@ class _GradientMenuState extends State<GradientMenu> {
                                     child: Text(
                                       europeanCountries[index],
                                       style: TextStyle(
-                                          fontFamily: "Proxima Nova",
+                                          fontFamily: "Gotham",
                                           fontSize: 20),
                                     ),
                                   ),

@@ -272,7 +272,7 @@ class _PlayerPageState extends State<PlayerPage> {
                                   child: Text(
                                 'PLAYING NOW',
                                 style: TextStyle(
-                                  fontFamily: 'Proxima Nova',
+                                  fontFamily: 'Gotham',
                                   color: Color.fromARGB(255, 117, 119, 122),
                                   fontWeight: FontWeight.bold,
                                   fontSize: 10,
@@ -355,7 +355,7 @@ class _PlayerPageState extends State<PlayerPage> {
                                   width: 100,
                                   height: 100,
                                   child: FlareActor(
-                                    'assets/like.flr',
+                                    'assets/animations/like.flr',
                                     controller: flareControls,
                                     animation: 'idle',
                                   ),
@@ -364,7 +364,7 @@ class _PlayerPageState extends State<PlayerPage> {
                                   width: 100,
                                   height: 100,
                                   child: FlareActor(
-                                    'assets/next.flr',
+                                    'assets/animations/next.flr',
                                     controller: flareControls2,
                                     animation: 'idle',
                                   ),
@@ -373,7 +373,7 @@ class _PlayerPageState extends State<PlayerPage> {
                                   width: 100,
                                   height: 100,
                                   child: FlareActor(
-                                    'assets/prev.flr',
+                                    'assets/animations/prev.flr',
                                     controller: flareControls3,
                                     animation: 'idle',
                                   ),
@@ -382,7 +382,7 @@ class _PlayerPageState extends State<PlayerPage> {
                                   width: 100,
                                   height: 100,
                                   child: FlareActor(
-                                    'assets/play.flr',
+                                    'assets/animations/play.flr',
                                     controller: flareControls4,
                                     animation: 'idle',
                                   ),
@@ -391,7 +391,7 @@ class _PlayerPageState extends State<PlayerPage> {
                                   width: 100,
                                   height: 100,
                                   child: FlareActor(
-                                    'assets/pause.flr',
+                                    'assets/animations/pause.flr',
                                     controller: flareControls5,
                                     animation: 'idle',
                                   ),
@@ -476,7 +476,7 @@ class _PlayerPageState extends State<PlayerPage> {
                                   Text(
                                     AudioManager.instance.info.title,
                                     style: TextStyle(
-                                      fontFamily: 'Proxima Nova',
+                                      fontFamily: 'Gotham',
                                       color: Color.fromARGB(255, 167, 168, 170),
                                       fontSize: 30,
                                     ),
@@ -484,7 +484,7 @@ class _PlayerPageState extends State<PlayerPage> {
                                   Text(
                                     AudioManager.instance.info.desc,
                                     style: TextStyle(
-                                      fontFamily: 'Proxima Nova',
+                                      fontFamily: 'Gotham',
                                       color: Color.fromARGB(255, 117, 119, 122),
                                       fontSize: 12,
                                     ),
@@ -764,7 +764,7 @@ class _PlayerPageState extends State<PlayerPage> {
   }
 
   Widget songProgress(BuildContext context, double width) {
-    var style = TextStyle(color: Colors.deepOrange, fontFamily: 'Proxima Nova');
+    var style = TextStyle(color: Colors.deepOrange, fontFamily: 'Gotham');
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
