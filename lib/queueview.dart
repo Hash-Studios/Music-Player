@@ -48,59 +48,6 @@ class QueueView extends StatefulWidget {
 
 class _QueueViewState extends State<QueueView> {
   bool openMenu = false;
-  final europeanCountries = [
-    'Albania',
-    'Andorra',
-    'Armenia',
-    'Austria',
-    'Azerbaijan',
-    'Belarus',
-    'Belgium',
-    'Bosnia and Herzegovina',
-    'Bulgaria',
-    'Croatia',
-    'Cyprus',
-    'Czech Republic',
-    'Denmark',
-    'Estonia',
-    'Finland',
-    'France',
-    'Georgia',
-    'Germany',
-    'Greece',
-    'Hungary',
-    'Iceland',
-    'Ireland',
-    'Italy',
-    'Kazakhstan',
-    'Kosovo',
-    'Latvia',
-    'Liechtenstein',
-    'Lithuania',
-    'Luxembourg',
-    'Macedonia',
-    'Malta',
-    'Moldova',
-    'Monaco',
-    'Montenegro',
-    'Netherlands',
-    'Norway',
-    'Poland',
-    'Portugal',
-    'Romania',
-    'Russia',
-    'San Marino',
-    'Serbia',
-    'Slovakia',
-    'Slovenia',
-    'Spain',
-    'Sweden',
-    'Switzerland',
-    'Turkey',
-    'Ukraine',
-    'United Kingdom',
-    'Vatican City'
-  ];
   void handleMenu() {
     this.setState(() {
       openMenu = openMenu ? false : true;
@@ -200,44 +147,73 @@ class _QueueViewState extends State<QueueView> {
                                 ],
                               ),
                             ),
-                            Container(child: Center(
-                            child: Stack(
-                              alignment: Alignment.center,
-                              children: <Widget>[
-                                Container(
-                                  // * Album Art
-                                  width: constraints.maxWidth * 0.43,
-                                  height: constraints.maxWidth * 0.43,
-                                  child: AlbumArt(),
-                                ),
-                                SizedBox(
-                                  // // TODO fix height and width of the image to scale
-                                  height: constraints.maxWidth * 0.4,
-                                  width: constraints.maxWidth * 0.4,
-                                  // // TODO fix this padding to work with diff screen sizes
-                                  child: CircleAvatar(
-                                    // * Album Art Image
-                                    backgroundColor:
-                                        Color.fromARGB(51, 20, 20, 20),
-                                    backgroundImage: AssetImage(
-                                        AudioManager.instance.info.coverUrl),
-                                  ),
-                                ),
-                                ClipOval(
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      print("tapped");
-                                    },
-                                    child: SizedBox(
-                                      width: constraints.maxWidth * 0.4,
-                                      height: constraints.maxWidth * 0.4,
-                                      child: Text(''),
+                            Container(
+                              child: Center(
+                                child: Stack(
+                                  alignment: Alignment.center,
+                                  children: <Widget>[
+                                    Container(
+                                      // * Album Art
+                                      width: constraints.maxWidth * 0.43,
+                                      height: constraints.maxWidth * 0.43,
+                                      child: AlbumArt(),
                                     ),
-                                  ),
+                                    SizedBox(
+                                      // // TODO fix height and width of the image to scale
+                                      height: constraints.maxWidth * 0.4,
+                                      width: constraints.maxWidth * 0.4,
+                                      // // TODO fix this padding to work with diff screen sizes
+                                      child: CircleAvatar(
+                                        // * Album Art Image
+                                        backgroundColor:
+                                            Color.fromARGB(51, 20, 20, 20),
+                                        backgroundImage: AssetImage(AudioManager
+                                            .instance.info.coverUrl),
+                                      ),
+                                    ),
+                                    ClipOval(
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) {
+                                                return PlayerPage(
+                                                  isLiked: widget.isLiked,
+                                                  shuffleMode:
+                                                      widget.shuffleMode,
+                                                  repeatMode: widget.repeatMode,
+                                                  likeSnackBar:
+                                                      widget.likeSnackBar,
+                                                  dislikeSnackBar:
+                                                      widget.dislikeSnackBar,
+                                                  platformVersion:
+                                                      widget.platformVersion,
+                                                  isPlaying: widget.isPlaying,
+                                                  duration: widget.duration,
+                                                  slider: widget.slider,
+                                                  sliderVolume:
+                                                      widget.sliderVolume,
+                                                  error: widget.error,
+                                                  curIndex: widget.curIndex,
+                                                  playMode: widget.playMode,
+                                                  list: widget.list,
+                                                );
+                                              },
+                                            ),
+                                          );
+                                        },
+                                        child: SizedBox(
+                                          width: constraints.maxWidth * 0.4,
+                                          height: constraints.maxWidth * 0.4,
+                                          child: Text(''),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ],
+                              ),
                             ),
-                          ),),
                             Container(
                               // * Back Button
                               width: constraints.maxWidth * 0.121,
@@ -395,8 +371,7 @@ class _QueueViewState extends State<QueueView> {
                                     ),
                                     title: Text(
                                       widget.list[index]["title"],
-                                      style:
-                                          TextStyle(fontFamily: "Gotham"),
+                                      style: TextStyle(fontFamily: "Gotham"),
                                     ),
                                     subtitle: Text(widget.list[index]["desc"]),
                                   ),

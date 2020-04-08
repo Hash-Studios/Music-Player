@@ -7,49 +7,49 @@ class AudioData {
       "title": "End of Time",
       "desc": "K-391, Alan Walker & Ahrix",
       "url": "assets/songs/audio.mp3",
-      "coverUrl": "assets/album art/album_art.png"
+      "coverUrl": "assets/albumart/album_art.png"
     },
     {
       "title": "SOS",
       "desc": "Avicii",
       "url": "assets/songs/audio2.mp3",
-      "coverUrl": "assets/album art/album_art2.png"
+      "coverUrl": "assets/albumart/album_art2.png"
     },
     {
       "title": "Let Me Love You",
       "desc": "DJ Snake",
       "url": "assets/songs/DJ Snake - Let Me Love You.mp3",
-      "coverUrl": "assets/album art/album_art3.png"
+      "coverUrl": "assets/albumart/album_art3.png"
     },
     {
       "title": "Alone",
       "desc": "Alan Walker",
       "url": "assets/songs/Alan Walker - Alone.mp3",
-      "coverUrl": "assets/album art/album_art6.png"
+      "coverUrl": "assets/albumart/album_art6.png"
     },
     {
       "title": "Bones",
       "desc": "Clarx",
       "url": "assets/songs/Clarx - Bones.mp3",
-      "coverUrl": "assets/album art/album_art5.png"
+      "coverUrl": "assets/albumart/album_art5.png"
     },
     {
       "title": "Heaven",
       "desc": "Avicii",
       "url": "assets/songs/Avicii - Heaven.mp3",
-      "coverUrl": "assets/album art/album_art8.png"
+      "coverUrl": "assets/albumart/album_art8.png"
     },
     {
       "title": "Le Freak",
       "desc": "Chic",
       "url": "assets/songs/Chic - Le Freak.mp3",
-      "coverUrl": "assets/album art/album_art7.png"
+      "coverUrl": "assets/albumart/album_art7.png"
     },
     {
       "title": "Might Not Like Me",
       "desc": "Brynn Elliott",
       "url": "assets/songs/Brynn Elliott - Might Not Like Me.mp3",
-      "coverUrl": "assets/album art/album_art4.png"
+      "coverUrl": "assets/albumart/album_art4.png"
     },
   ];
   static bool isLiked = false;

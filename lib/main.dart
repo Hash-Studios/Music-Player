@@ -9,6 +9,14 @@ import 'dart:io';
 // * Main Function
 void main() => runApp(App());
 
+class MyBehavior extends ScrollBehavior {
+  @override
+  Widget buildViewportChrome(
+      BuildContext context, Widget child, AxisDirection axisDirection) {
+    return child;
+  }
+}
+
 // * Main App Stateless Widget used for statusbar coloring
 class App extends StatelessWidget {
   @override
@@ -153,6 +161,12 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      builder: (context, child) {
+        return ScrollConfiguration(
+          behavior: MyBehavior(),
+          child: child,
+        );
+      },
       title: 'Music Player',
       theme: ThemeData(
         brightness: Brightness.dark,
@@ -173,7 +187,7 @@ class _MyAppState extends State<MyApp> {
         curIndex: curIndex,
         playMode: playMode,
         list: list,
-      ), // * Player Page Instance created
+      ), // * Queue View Instance created
     );
   }
 }
